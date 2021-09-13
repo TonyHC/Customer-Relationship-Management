@@ -34,4 +34,20 @@ public class CustomerDAOImplementation implements CustomerDAO {
 		// Return List of Customers
 		return customers;
 	}
+
+	@Override
+	@Transactional
+	public Customer getCustomerLicense() {
+		// Get the Current Hibernate Session
+		Session session = sessionFactory.getCurrentSession();
+		
+		// Create a query for a specific Customer and its Licenses
+		Query<Customer> query = session.createQuery("SELECT c FROM Customer c JOIN FETCH c.licenses WHERE c.id = 1", Customer.class);
+		
+		// Execute Query and Get Customer along with its Licenses
+		Customer customer = query.getSingleResult();
+	
+		// Return the desired Customer
+		return customer;
+	}
 }
