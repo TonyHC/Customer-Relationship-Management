@@ -2,8 +2,6 @@ package com.java.springdemo.dao;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -18,7 +16,6 @@ public class LicenseDAOImplementation implements LicenseDAO {
 	private SessionFactory sessionFactory;
 
 	@Override
-	@Transactional
 	public List<License> getLicenses() {
 		Session currentSession = sessionFactory.getCurrentSession();
 		
