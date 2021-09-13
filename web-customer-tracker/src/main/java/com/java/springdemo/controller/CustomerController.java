@@ -5,29 +5,25 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.java.springdemo.dao.CustomerDAO;
-import com.java.springdemo.dao.LicenseDAO;
 import com.java.springdemo.entity.Customer;
 import com.java.springdemo.entity.License;
+import com.java.springdemo.service.CustomerService;
 
 @Controller
 @RequestMapping("/customer")
-public class CustomerController {
-	// Need to Inject the Customer DAO
-	// Spring will scan for a Component that implements CustomerDAO interface
-	// If more than one implementation, use the @Qualifier to specify the correct one
+public class CustomerController {	
+	// Need to Inject the CustomerService
 	@Autowired
-	private CustomerDAO customerDAO;
+	private CustomerService customerService;
 	
-	@Autowired
-	private LicenseDAO licenseDAO;
-	
-	@RequestMapping("/list")
+	@GetMapping("/list")
 	public String listCustomers(Model model) {
-		// Get the List of Customers from Customer DAO
-		List<Customer> customers = customerDAO.getCustomers();
+		// Get the List of Customers from Customer Service
+		List<Customer> customers = customerService.getCustomers();
 		
 		// Add Customers to the Spring MVC Model
 		model.addAttribute("customers", customers);
@@ -36,9 +32,9 @@ public class CustomerController {
 		return "list-customers";
 	}
 	
-	@RequestMapping("/licenses")
+	@RequestMapping(path = "/licenses", method = RequestMethod.GET)
 	public String listLicenses(Model model) {
-		List<License> licenses = licenseDAO.getLicenses();
+		List<License> licenses = customerService.getLicenses();
 		
 		model.addAttribute("licenses", licenses);
 		
@@ -47,7 +43,7 @@ public class CustomerController {
 	
 	@RequestMapping("/license")
 	public String listCustomerLicenses(Model model) {
-		Customer customer = customerDAO.getCustomerLicense();
+		Customer customer = customerService.getCustomerLicenses();
 		
 		model.addAttribute("customer", customer);
 				
