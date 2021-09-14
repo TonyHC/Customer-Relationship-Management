@@ -28,7 +28,20 @@ public class CustomerServiceImplementation implements CustomerService {
 		// Delegate Call to CustomerDAO
 		return customerDAO.getCustomers();
 	}
-
+	
+	@Override
+	@Transactional
+	public void saveCustomer(Customer customer) {
+		// Delegate Call to CustomerDAO
+		customerDAO.saveCustomer(customer);
+	}
+	
+	@Override
+	@Transactional
+	public Customer getCustomer(int customerID) {
+		// Delegate Call to CustomerDAO
+		return customerDAO.getCustomer(customerID);
+	}
 	@Override
 	@Transactional
 	public Customer getCustomerLicenses() {
