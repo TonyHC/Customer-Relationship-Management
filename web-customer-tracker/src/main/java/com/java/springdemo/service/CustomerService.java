@@ -10,6 +10,7 @@ public interface CustomerService {
 	public void saveCustomer(Customer customer);	
 	public Customer getCustomer(int customerID);	
 	public void deleteCustomer(int customerID);
+	public List<Customer> searchCustomers(String searchName);	
 	public Customer getCustomerLicenses();
 	public List<License> getLicenses();
 }
