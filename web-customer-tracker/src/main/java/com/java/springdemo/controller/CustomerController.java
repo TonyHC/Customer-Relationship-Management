@@ -56,8 +56,7 @@ public class CustomerController {
 	}
 	
 	@GetMapping("/showFormForUpdatingCustomer")
-	public String showFormToUpdateCustomer(@RequestParam("customerID") int customerID, 
-			Model model) {
+	public String showFormToUpdateCustomer(@RequestParam("customerID") int customerID, Model model) {
 		// Get the Customer from Customer Service
 		Customer customer = customerService.getCustomer(customerID);
 		
@@ -66,6 +65,14 @@ public class CustomerController {
 		
 		// Send over to the Form
 		return "customer-form";
+	}
+	
+	@GetMapping("/deleteCustomer")
+	public String deleteCustomer(@RequestParam("customerID") int customerID, Model model) {
+		// Delete the Customer from Customer Service
+		customerService.deleteCustomer(customerID);
+		
+		return "redirect:/customer/list";
 	}
 	
 	@RequestMapping(path = "/licenses", method = RequestMethod.GET)
