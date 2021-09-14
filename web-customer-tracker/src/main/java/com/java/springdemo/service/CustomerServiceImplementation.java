@@ -52,6 +52,13 @@ public class CustomerServiceImplementation implements CustomerService {
 	
 	@Override
 	@Transactional
+	public List<Customer> searchCustomers(String searchName) {
+		// Delegte Call to CustomerDAO
+		return customerDAO.searchCustomers(searchName);
+	}	
+	
+	@Override
+	@Transactional
 	public Customer getCustomerLicenses() {
 		// Delegate Call to CustomerDAO
 		return customerDAO.getCustomerLicense();
