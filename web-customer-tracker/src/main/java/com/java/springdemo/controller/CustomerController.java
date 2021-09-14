@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.java.springdemo.entity.Customer;
 import com.java.springdemo.entity.License;
@@ -30,6 +33,39 @@ public class CustomerController {
 		
 		// Return the JSP Page Mapping
 		return "list-customers";
+	}
+	
+	@GetMapping("/showFormToAddCustomer")
+	public String showFormToAddCustomer(Model model) {
+		// Create empty Customer Object
+		Customer customer = new Customer();
+		
+		// Add Customer Object to Model - used to bind Form Data
+		model.addAttribute("customer", customer);
+		
+		return "customer-form";
+	}
+	
+	@PostMapping("/saveCustomer")
+	public String saveCustomer(@ModelAttribute("customer") Customer customer) {	
+		// Save the Customer into DB Using Customer Service 
+		customerService.saveCustomer(customer);
+		
+		// Redirect to "customer/list" Mapping
+		return "redirect:/customer/list";
+	}
+	
+	@GetMapping("/showFormForUpdatingCustomer")
+	public String showFormToUpdateCustomer(@RequestParam("customerID") int customerID, 
+			Model model) {
+		// Get the Customer from Customer Service
+		Customer customer = customerService.getCustomer(customerID);
+		
+		// Set Customer as Model Attribute to PrePopulate the Form
+		model.addAttribute("customer", customer);
+		
+		// Send over to the Form
+		return "customer-form";
 	}
 	
 	@RequestMapping(path = "/licenses", method = RequestMethod.GET)
