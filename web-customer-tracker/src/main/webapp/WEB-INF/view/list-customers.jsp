@@ -26,25 +26,45 @@
     
     <div id = "wrapper">
         <div id = content>
-            
+        
             <!-- Add HTML Table -->
             <table>
                 <tr>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Email</th>
+                    <th>Action</th>
                 </tr>
                 
                 <!-- Loop Through and Print Out Customers Info -->
-                <c:forEach var = "tempCustomer" items = "${customers}">
+                <c:forEach var = "customer" items = "${customers}">
+                
+                	<!-- Construct an "Update" Link with Customer ID -->
+                	<c:url var = "updateLink" value = "/customer/showFormForUpdatingCustomer">
+                		<c:param name = "customerID" value = "${customer.id}" />
+                	</c:url>
+                
                     <tr>
-                        <td> ${tempCustomer.firstName} </td>
-                        <td> ${tempCustomer.lastName} </td>
-                        <td> ${tempCustomer.email} </td>
+                        <td> ${customer.firstName} </td>
+                        <td> ${customer.lastName} </td>
+                        <td> ${customer.email} </td>
+                        
+                        <td> 
+                        	<!-- Display the Update Link -->
+                        	<a href = "${updateLink}">Update</a> 
+                        </td>
+                        
                     </tr>
                 </c:forEach>
             </table>
             
+            
+            <!-- Add Button: Add Customer -->
+        	<!-- "showFormToAddCustomer" calls the Spring Controller Mapping -->
+        	<input type = "button" value = "Add Customer"
+        		onclick = "window.location.href = 'showFormToAddCustomer'; return false;"
+        		class = "add-button"/>
+        		
         </div>
     </div>
 
