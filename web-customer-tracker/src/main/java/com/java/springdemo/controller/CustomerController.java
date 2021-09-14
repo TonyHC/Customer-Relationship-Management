@@ -75,6 +75,16 @@ public class CustomerController {
 		return "redirect:/customer/list";
 	}
 	
+	@GetMapping("/searchCustomer")
+	public String searchCustomer(@RequestParam("searchName") String searchName, Model model) {
+		// Search Customers from Custom Service
+		List<Customer> customers = customerService.searchCustomers(searchName);
+		
+		model.addAttribute("customers", customers);
+		
+		return "list-customers";
+	}
+	
 	@RequestMapping(path = "/licenses", method = RequestMethod.GET)
 	public String listLicenses(Model model) {
 		List<License> licenses = customerService.getLicenses();
