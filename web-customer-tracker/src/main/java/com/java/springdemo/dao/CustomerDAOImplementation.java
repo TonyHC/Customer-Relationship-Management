@@ -22,8 +22,8 @@ public class CustomerDAOImplementation implements CustomerDAO {
 		// Get the Current Hibernate Session
 		Session currentSession = sessionFactory.getCurrentSession();
 		
-		// Create a Query for Customers
-		Query<Customer> query = currentSession.createQuery("FROM Customer", Customer.class);
+		// Create a Query for Customers and Sort Data By Last Name Alphabetically 
+		Query<Customer> query = currentSession.createQuery("FROM Customer ORDER BY lastName", Customer.class);
 		
 		// Execute Query and Get Result List of Customers
 		List<Customer> customers = query.getResultList();
@@ -31,7 +31,17 @@ public class CustomerDAOImplementation implements CustomerDAO {
 		// Return List of Customers
 		return customers;
 	}
-
+	
+	@Override
+	public void saveCustomer(Customer customer) {
+		// Get the Current Hibernate Session
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		// Save/Update the Customer to the DB
+		// If (Primary Key / ID) empty then Insert new Customer else Update existing Customer
+		currentSession.saveOrUpdate(customer);
+	}
+	
 	@Override
 	public Customer getCustomerLicense() {
 		// Get the Current Hibernate Session
@@ -44,6 +54,18 @@ public class CustomerDAOImplementation implements CustomerDAO {
 		Customer customer = query.getSingleResult();
 	
 		// Return the desired Customer
+		return customer;
+	}
+
+	@Override
+	public Customer getCustomer(int customerID) {
+		// Get the Current Hibernate Session
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		// Get the Customer from DB using Primary Key (id passed in)
+		Customer customer = currentSession.get(Customer.class, customerID);
+		
+		// Return desired Customer
 		return customer;
 	}
 }
