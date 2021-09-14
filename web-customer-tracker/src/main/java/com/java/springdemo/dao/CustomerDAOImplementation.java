@@ -43,6 +43,39 @@ public class CustomerDAOImplementation implements CustomerDAO {
 	}
 	
 	@Override
+	public Customer getCustomer(int customerID) {
+		// Get the Current Hibernate Session
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		// Get the Customer from DB using Primary Key (id passed in)
+		Customer customer = currentSession.get(Customer.class, customerID);
+		
+		// Return desired Customer
+		return customer;
+	}
+	
+	@Override
+	public void deleteCustomer(int customerID) {
+		// Get the Current Hibernate Session
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		// Create a query to find the desired Customer using Primary Key (customerID passed in)
+		Query<Customer> query = currentSession.createQuery("FROM Customer WHERE id =: theCustomerID", Customer.class);
+		
+		// Set 'theCustomerID' parameter to 'customerID' passed in
+		query.setParameter("theCustomerID", customerID);
+		
+		// Get the desired Customer from query result
+		Customer tmpCustomer = query.getSingleResult();
+		
+		// Remove all Customer's references to their Licenses, so deleting a Customer also deletes their Licenses
+		tmpCustomer.deleteLicenses();
+		
+		// Delete the Customer along with its Licenses from DB
+		currentSession.delete(tmpCustomer);
+	}	
+	
+	@Override
 	public Customer getCustomerLicense() {
 		// Get the Current Hibernate Session
 		Session session = sessionFactory.getCurrentSession();
@@ -54,18 +87,6 @@ public class CustomerDAOImplementation implements CustomerDAO {
 		Customer customer = query.getSingleResult();
 	
 		// Return the desired Customer
-		return customer;
-	}
-
-	@Override
-	public Customer getCustomer(int customerID) {
-		// Get the Current Hibernate Session
-		Session currentSession = sessionFactory.getCurrentSession();
-		
-		// Get the Customer from DB using Primary Key (id passed in)
-		Customer customer = currentSession.get(Customer.class, customerID);
-		
-		// Return desired Customer
 		return customer;
 	}
 }
