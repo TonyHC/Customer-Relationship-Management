@@ -89,6 +89,11 @@ public class Customer {
 		
 		licenses.add(license);
 	}
+	
+	public void deleteLicenses() {
+		for (License license : licenses)
+				license.setCustomer(null);
+	}
 
 	@Override
 	public String toString() {
