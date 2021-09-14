@@ -7,6 +7,8 @@ import com.java.springdemo.entity.License;
 
 public interface CustomerService {
 	public List<Customer> getCustomers();
+	public void saveCustomer(Customer customer);	
+	public Customer getCustomer(int customerID);	
 	public Customer getCustomerLicenses();
 	public List<License> getLicenses();
 }
