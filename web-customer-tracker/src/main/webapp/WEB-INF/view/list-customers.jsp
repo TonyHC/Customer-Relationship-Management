@@ -1,5 +1,6 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@ taglib prefix = "form" uri = "http://www.springframework.org/tags/form" %>
+<%@ page import = "com.java.springdemo.utils.SortUtils" %>
 
 <!DOCTYPE html>
 
@@ -33,13 +34,28 @@
                 Search Customer: <input type = "text" name = "searchName" />
                 <input type = "submit" value = "Search" class = "add-button" />
             </form:form>
+            
+            <!-- Construct an Sort Link for Customer First Name -->
+            <c:url var = "sortFirstName" value = "/customer/list" >
+                <c:param name = "sort" value = "<%= Integer.toString(SortUtils.FIRST_NAME) %>" />
+            </c:url>
+                	
+            <!-- Construct an Sort Link for Customer Last Name -->
+            <c:url var = "sortLastName" value = "/customer/list" >
+                <c:param name = "sort" value = "<%= Integer.toString(SortUtils.LAST_NAME) %>" />
+            </c:url>
+                    
+            <!-- Construct an Sort Link for Customer Email -->
+            <c:url var = "sortEmail" value = "/customer/list" >
+                <c:param name = "sort" value = "<%= Integer.toString(SortUtils.EMAIL) %>" />
+            </c:url>
         
             <!-- Add HTML Table -->
             <table>
                 <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
+                    <th><a href = "${sortFirstName}">First Name</a></th>
+                    <th><a href = "${sortLastName}">Last Name</a></th>
+                    <th><a href = "${sortEmail}">Email</a></th>
                     <th>Action</th>
                 </tr>
                 
@@ -55,6 +71,11 @@
                 	<c:url var = "deleteLink" value = "/customer/deleteCustomer">
                 		<c:param name = "customerID" value = "${customer.id}" />
                 	</c:url>
+                	
+                	<!-- Construct an Customer License Link embedded with Customer ID -->
+                    <c:url var = "customerLicenseLink" value = "/customer/license" >
+                        <c:param name = "customerID" value = "${customer.id}" />
+                    </c:url>
                 
                     <tr>
                         <td> ${customer.firstName} </td>
@@ -69,6 +90,9 @@
                         	<!-- Add JS to prompt the User: confirm(...) - displays a confirmation popup dialog -->
                         	<a href = "${deleteLink}"
                         		onclick = "if(!(confirm('Do you want to delete this Customer?'))) return false">Delete</a>
+                        	|
+                        	<!-- Display the License Link -->
+                        	<a href = "${customerLicenseLink}">License</a>
                         </td>
                         
                     </tr>
@@ -81,7 +105,11 @@
         	<input type = "button" value = "Add Customer"
         		onclick = "window.location.href = 'showFormToAddCustomer'; return false;"
         		class = "add-button"/>
-        		
+        	
+        	<br>
+     
+            <a href = "${pageContext.request.contextPath}/customer/licenses" >Licenses</a>
+          
         </div>
     </div>
 
