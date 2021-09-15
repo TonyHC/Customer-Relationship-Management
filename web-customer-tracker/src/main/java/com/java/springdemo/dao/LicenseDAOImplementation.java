@@ -6,23 +6,37 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.java.springdemo.entity.License;
+import com.java.springdemo.utils.SortUtils;
 
 @Repository
 public class LicenseDAOImplementation implements LicenseDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
+	
+	@Autowired
+	@Qualifier("sortLicenses")
+	private SortUtils sortUtils;
 
 	@Override
-	public List<License> getLicenses() {
+	public List<License> getLicenses(int sortField) {
+		// Get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 		
-		Query<License> query = currentSession.createQuery("FROM License", License.class);
+		// Get the desired field name to sort License
+		String fieldName = sortUtils.fieldName(sortField);
 		
+		// Create a query to get all Licenses from DB and order the query by desired field name (property)
+		String queryLicense = "FROM License ORDER BY " + fieldName;
+		Query<License> query = currentSession.createQuery(queryLicense, License.class);
+		
+		// Get the desired Licenses
 		List<License> licenses = query.getResultList();
 		
+		// Return list of desired Licenses
 		return licenses;
 	}
 }
