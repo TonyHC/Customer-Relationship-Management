@@ -5,5 +5,5 @@ import java.util.List;
 import com.java.springdemo.entity.License;
 
 public interface LicenseDAO {
-	public List<License> getLicenses();
+	public List<License> getLicenses(int sortField);
 }
