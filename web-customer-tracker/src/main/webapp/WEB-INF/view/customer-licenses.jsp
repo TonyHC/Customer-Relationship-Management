@@ -15,9 +15,13 @@
 
 <body>
 
+    <div id = "wrapper">
+        <div id = "header">
+            <h2>Customer License</h2>
+        </div>
+    </div>
+
 	<div class="container">
-	
-		<h2>Customer License</h2>
 		
 		<table class="table table-bordered table-striped">
 			<thead class="table-primary">
@@ -45,6 +49,10 @@
 					</c:forEach>
 			</tbody>		
 		</table>
+		
+	    <p>
+            <a href = "${pageContext.request.contextPath}/customer/list" >Back to Customer List</a>
+        </p>
 		
 	</div>
 	
