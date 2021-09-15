@@ -42,16 +42,19 @@
 					<tr>
 						<td>First Name</td>
 						<td><form:input path = "firstName" /> </td>
+						<td><form:errors path = "firstName" cssClass = "error" /></td>
 					</tr>
 					
 					<tr>
 						<td>Last Name</td>
 						<td><form:input path = "lastName" /> </td>
+						<td><form:errors path = "lastName" cssClass = "error" /></td>
 					</tr>
 					
 					<tr>
 						<td>Email</td>
 						<td><form:input path = "email" /> </td>
+						<td><form:errors path = "email" cssClass = "error" /></td>
 					</tr>
 					
 					<tr>
@@ -68,6 +71,7 @@
 		<p>
 			<a href = "${pageContext.request.contextPath}/customer/list" >Back to Customer List</a>
 		</p>
+		
 	</div>
 
 </body>
