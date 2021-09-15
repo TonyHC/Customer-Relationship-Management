@@ -13,4 +13,5 @@ public interface CustomerService {
 	public List<Customer> searchCustomers(String searchName);	
 	public Customer getCustomerLicenses(int customerID);
 	public List<License> getLicenses(int sortField);
+	public void deleteLicense(int licenseID);
 }
