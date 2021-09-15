@@ -39,4 +39,23 @@ public class LicenseDAOImplementation implements LicenseDAO {
 		// Return list of desired Licenses
 		return licenses;
 	}
+
+	@Override
+	public void deleteLicense(int licenseID) {
+		// Get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		// Create a query to retrieve the desired License based on its id (Primary Key passed in)
+		Query<License> query = currentSession.createQuery("FROM License WHERE id =: theLicenseID", License.class);
+		
+		// Set 'theLicenseID' with value passed in
+		query.setParameter("theLicenseID", licenseID);
+		
+		
+		// Execute query and store the result
+		License tmpLicense = query.getSingleResult();
+		
+		// Delete the retireve License from DB
+		currentSession.delete(tmpLicense);
+	}
 }
