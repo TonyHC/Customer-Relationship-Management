@@ -6,9 +6,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.java.springdemo.entity.Customer;
+import com.java.springdemo.utils.SortUtils;
 
 @Repository
 public class CustomerDAOImplementation implements CustomerDAO {
@@ -17,13 +19,21 @@ public class CustomerDAOImplementation implements CustomerDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
+	@Autowired
+	@Qualifier("sortCustomers")
+	private SortUtils sortUtils;
+	
 	@Override
-	public List<Customer> getCustomers() {
+	public List<Customer> getCustomers(int sortField) {
 		// Get the Current Hibernate Session
 		Session currentSession = sessionFactory.getCurrentSession();
 		
-		// Create a Query for Customers and Sort Data By Last Name Alphabetically 
-		Query<Customer> query = currentSession.createQuery("FROM Customer ORDER BY lastName", Customer.class);
+		// Determine the Sort Field
+		String fieldName = sortUtils.fieldName(sortField);
+		
+		// Create a Query for Customers and Sort Data By Last Name Alphabetically 	
+		String queryCustomer = "FROM Customer ORDER BY " + fieldName;
+		Query<Customer> query = currentSession.createQuery(queryCustomer, Customer.class);
 		
 		// Execute Query and Get Result List of Customers
 		List<Customer> customers = query.getResultList();
@@ -100,16 +110,25 @@ public class CustomerDAOImplementation implements CustomerDAO {
 	}	
 	
 	@Override
-	public Customer getCustomerLicense() {
+	public Customer getCustomerLicense(int customerID) {
 		// Get the Current Hibernate Session
 		Session session = sessionFactory.getCurrentSession();
 		
 		// Create a query for a specific Customer and its Licenses
-		Query<Customer> query = session.createQuery("SELECT c FROM Customer c JOIN FETCH c.licenses WHERE c.id = 1", Customer.class);
+		Query<Customer> query = session.createQuery("SELECT c FROM Customer c JOIN FETCH c.licenses WHERE c.id =: theCustomerID", Customer.class);
+		query.setParameter("theCustomerID", customerID);
 		
-		// Execute Query and Get Customer along with its Licenses
-		Customer customer = query.getSingleResult();
+		Customer customer = null;
 	
+		// If query found no data, then we create new empty Customer
+		if (query.uniqueResult() == null) {
+			customer = new Customer();
+	
+		} else {
+			// Execute Query and Get Customer along with its Licenses
+			customer = query.getSingleResult();
+		}
+		
 		// Return the desired Customer
 		return customer;
 	}
