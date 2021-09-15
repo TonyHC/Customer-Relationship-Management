@@ -1,4 +1,5 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<%@ page import = "com.java.springdemo.utils.SortUtils" %>
 
 <!DOCTYPE html>
 
@@ -26,13 +27,28 @@
     
     <div id = "wrapper">
         <div id = content>
+        
+            <!-- Construct an Sort Link for Customer First Name -->
+            <c:url var = "sortLicenses" value = "/customer/licenses" >
+                <c:param name = "sort" value = "<%= Integer.toString(SortUtils.LICENSE_NAME) %>" />
+            </c:url>
+                    
+            <!-- Construct an Sort Link for Customer Last Name -->
+            <c:url var = "sortStartDate" value = "/customer/licenses" >
+                <c:param name = "sort" value = "<%= Integer.toString(SortUtils.START_DATE) %>" />
+            </c:url>
+                    
+            <!-- Construct an Sort Link for Customer Email -->
+            <c:url var = "sortExpirationDate" value = "/customer/licenses" >
+                <c:param name = "sort" value = "<%= Integer.toString(SortUtils.EXPIRATION_DATE) %>" />
+            </c:url>
             
             <!-- Add HTML Table -->
             <table>
                 <tr>
-                    <th>License Name</th>
-                    <th>Start Date</th>
-                    <th>Expiration Date</th>
+                    <th><a href = "${sortLicenses}">License Name</a></th>
+                    <th><a href = "${sortStartDate}">Start Date</a></th>
+                    <th><a href = "${sortExpirationDate}">Expiration Date</a></th>
                 </tr>
                 
                 <!-- Loop Through and Print Out Customers Info -->
@@ -44,6 +60,10 @@
                     </tr>
                 </c:forEach>
             </table>
+            
+        <p>
+            <a href = "${pageContext.request.contextPath}/customer/list" >Back to Customer List</a>
+        </p>
             
         </div>
     </div>
