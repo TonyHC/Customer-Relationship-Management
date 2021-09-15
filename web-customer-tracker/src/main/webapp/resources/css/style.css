@@ -51,3 +51,9 @@ a:link, a:visited {
     text-decoration: none;
     color: blue;	
 }
+
+.error {
+	color: red;
+	padding: 5px;
+	font-size: 12px;
+}
