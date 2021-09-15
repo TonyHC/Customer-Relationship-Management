@@ -70,4 +70,11 @@ public class CustomerServiceImplementation implements CustomerService {
 		// Delegate Call to LicenseDAO
 		return licenseDAO.getLicenses(sortField);
 	}
+
+	@Override
+	@Transactional
+	public void deleteLicense(int licenseID) {
+		// Delegate Call to LicenseDAO
+		 licenseDAO.deleteLicense(licenseID);
+	}
 }
