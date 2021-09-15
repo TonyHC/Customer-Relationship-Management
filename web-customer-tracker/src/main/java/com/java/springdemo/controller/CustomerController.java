@@ -2,19 +2,22 @@ package com.java.springdemo.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.java.springdemo.entity.Customer;
 import com.java.springdemo.entity.License;
 import com.java.springdemo.service.CustomerService;
+import com.java.springdemo.utils.SortUtils;
 
 @Controller
 @RequestMapping("/customer")
@@ -24,9 +27,17 @@ public class CustomerController {
 	private CustomerService customerService;
 	
 	@GetMapping("/list")
-	public String listCustomers(Model model) {
-		// Get the List of Customers from Customer Service
-		List<Customer> customers = customerService.getCustomers();
+	public String listCustomers(Model model, @RequestParam(required = false) String sort) {
+		List<Customer> customers = null;
+		
+		// If sort field provided, use the sort provided and get the List of Customers from Customer Service
+		if (sort != null) {
+			int sortField = Integer.parseInt(sort);
+			customers = customerService.getCustomers(sortField);
+		} else {
+			// If no sort field provided, default to sorting by Customer Last Name
+			customers = customerService.getCustomers(SortUtils.LAST_NAME);
+		}
 		
 		// Add Customers to the Spring MVC Model
 		model.addAttribute("customers", customers);
@@ -47,12 +58,17 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/saveCustomer")
-	public String saveCustomer(@ModelAttribute("customer") Customer customer) {	
-		// Save the Customer into DB Using Customer Service 
-		customerService.saveCustomer(customer);
-		
-		// Redirect to "customer/list" Mapping
-		return "redirect:/customer/list";
+	public String saveCustomer(@Valid @ModelAttribute("customer") Customer customer, BindingResult bindingResult) {	
+		// If Form Data for Customer has violates some constraint, then return back to customer-form.jsp and display error message
+		if (bindingResult.hasErrors()) {
+			return "customer-form";
+		} else {
+			// Save the Customer into DB Using Customer Service 
+			customerService.saveCustomer(customer);
+			
+			// Redirect to "customer/list" Mapping
+			return "redirect:/customer/list";
+		}
 	}
 	
 	@GetMapping("/showFormForUpdatingCustomer")
@@ -85,25 +101,41 @@ public class CustomerController {
 		return "list-customers";
 	}
 	
-	@RequestMapping(path = "/licenses", method = RequestMethod.GET)
-	public String listLicenses(Model model) {
-		List<License> licenses = customerService.getLicenses();
+	@GetMapping("/licenses")
+	public String listLicenses(Model model, @RequestParam(required = false) String sort) {
+		List<License> licenses = null;
 		
+		// If sort field provided, use the sort provided and get the List of Licenses from Customer Service
+		if (sort != null) {
+			int sortField = Integer.parseInt(sort);
+			licenses = customerService.getLicenses(sortField);
+		} else {
+			// If no sort field provided, default to sorting by Licenses Expiration Date
+			licenses = customerService.getLicenses(SortUtils.EXPIRATION_DATE);
+		}
+		
+		// Add Licenses to the Spring MVC Model
 		model.addAttribute("licenses", licenses);
 		
+		// Return to list-licenses.jsp
 		return "list-licenses";
 	}
 	
-	@RequestMapping("/license")
-	public String listCustomerLicenses(Model model) {
-		Customer customer = customerService.getCustomerLicenses();
+	@GetMapping("/license")
+	public String listCustomerLicenses(@RequestParam("customerID") int customerID, Model model) {
+		// Get the desired Customer along with its Licenses using the Customer's id from Customer Service
+		Customer customer = customerService.getCustomerLicenses(customerID);
 		
+		// Add desired Customer to Spring MVC Model
 		model.addAttribute("customer", customer);
-				
+		
+		// Retrieve the Licenses from Customer
 		List<License> licenses = customer.getLicenses();
 
+		// Add those Licenses to Spring MVC Model
 		model.addAttribute("licenses", licenses);
 		
-		return "list-customer-licenses";
+		// Return to customer-licenses.jsp
+		return "customer-licenses";
 	}
 }
