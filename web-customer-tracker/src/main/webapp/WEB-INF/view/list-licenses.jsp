@@ -49,14 +49,23 @@
                     <th><a href = "${sortLicenses}">License Name</a></th>
                     <th><a href = "${sortStartDate}">Start Date</a></th>
                     <th><a href = "${sortExpirationDate}">Expiration Date</a></th>
+                    <th>Action</th>
                 </tr>
                 
                 <!-- Loop Through and Print Out Customers Info -->
                 <c:forEach var = "license" items = "${licenses}">
+                    <!-- Construct an "Delete" Link with License ID -->
+                    <c:url var = "deleteLink" value = "/customer/deleteLicense">
+                        <c:param name = "licenseID" value = "${license.id}" />
+                    </c:url>
+                
+                
                     <tr>
                         <td> ${license.licenseName} </td>
                         <td> ${license.startDate} </td>
                         <td> ${license.expirationDate} </td>
+                        <td><a href = "${deleteLink}"
+                            onclick = "if(!(confirm('Do you want to delete this License?'))) return false">Delete</a></td>
                     </tr>
                 </c:forEach>
             </table>
