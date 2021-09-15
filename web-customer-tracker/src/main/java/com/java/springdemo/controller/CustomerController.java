@@ -84,8 +84,8 @@ public class CustomerController {
 	}
 	
 	@GetMapping("/deleteCustomer")
-	public String deleteCustomer(@RequestParam("customerID") int customerID, Model model) {
-		// Delete the Customer from Customer Service
+	public String deleteCustomer(@RequestParam("customerID") int customerID) {
+		// Delete the Customer from Customer Service using Customer's id
 		customerService.deleteCustomer(customerID);
 		
 		return "redirect:/customer/list";
@@ -137,5 +137,13 @@ public class CustomerController {
 		
 		// Return to customer-licenses.jsp
 		return "customer-licenses";
+	}
+	
+	@GetMapping("/deleteLicense")
+	public String deleteLicense(@RequestParam("licenseID") int licenseID) {
+		// Delete the License from Customer Service using License's id
+		customerService.deleteLicense(licenseID);
+		
+		return "redirect:/customer/licenses";
 	}
 }
