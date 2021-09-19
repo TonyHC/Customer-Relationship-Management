@@ -92,7 +92,7 @@ public class CustomerController {
 	}
 	
 	@GetMapping("/searchCustomer")
-	public String searchCustomer(@RequestParam("searchName") String searchName, Model model) {
+	public String searchCustomers(@RequestParam("searchName") String searchName, Model model) {
 		// Search Customers from Custom Service
 		List<Customer> customers = customerService.searchCustomers(searchName);
 		
