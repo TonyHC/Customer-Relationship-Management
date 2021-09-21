@@ -19,7 +19,7 @@ public class AnalyticsAspect {
 	@Autowired
 	private CustomersMethodCall customerMethodCalls;
 	
-	@Around("com.java.springdemo.aspect.AspectDeclarations.NumberOfCallsForSaveCustomer()")
+	@Around("com.java.springdemo.aspect.PointcutDeclarations.NumberOfCallsForSaveCustomer()")
 	public void saveCustomerCalls(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 		// Display Method we are calling
 		String methodSignature = proceedingJoinPoint.getSignature().toShortString();
