@@ -16,7 +16,7 @@ public class LoggingAspect {
 	// Setup Logger
 	private Logger logger = Logger.getLogger(getClass().getName());
 	
-	@Before("com.java.springdemo.aspect.AspectDeclarations.webAppFlow()")
+	@Before("com.java.springdemo.aspect.PointcutDeclarations.webAppFlow()")
 	public void beforeWebAppFlow(JoinPoint joinPoint) {
 		// Display Method Signature we are calling
 		String methodSignature = joinPoint.getSignature().toShortString();
@@ -31,7 +31,7 @@ public class LoggingAspect {
 		}
 	}
 	
-	@AfterReturning(pointcut = "com.java.springdemo.aspect.AspectDeclarations.webAppFlow()",
+	@AfterReturning(pointcut = "com.java.springdemo.aspect.PointcutDeclarations.webAppFlow()",
 			returning = "result")
 	public void afterReturningWebAppFlow(JoinPoint joinPoint, Object result) {
 		// Display Method we are returning from
@@ -42,7 +42,7 @@ public class LoggingAspect {
 		logger.info("Result: " + result);
 	}
 	
-	@Around("com.java.springdemo.aspect.AspectDeclarations.searchCustomers()")
+	@Around("com.java.springdemo.aspect.PointcutDeclarations.searchCustomers()")
 	public Object searchCustomersDuration(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 		// Display Method we are calling
 		String methodSignature = proceedingJoinPoint.getSignature().toShortString();
