@@ -15,6 +15,7 @@ import com.java.springdemo.utils.SortUtils;
 @Repository
 public class LicenseDAOImplementation implements LicenseDAO {
 	@Autowired
+	@Qualifier("sessionFactory")
 	private SessionFactory sessionFactory;
 	
 	@Autowired

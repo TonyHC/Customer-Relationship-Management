@@ -17,6 +17,7 @@ public class CustomerDAOImplementation implements CustomerDAO {
 	// Need to Inject the Session Factory from Spring Config File Bean ID [sessionFactory]
 	// into the SessionFactory object 
 	@Autowired
+	@Qualifier("sessionFactory")
 	private SessionFactory sessionFactory;
 	
 	@Autowired
