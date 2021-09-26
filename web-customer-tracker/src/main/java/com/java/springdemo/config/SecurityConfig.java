@@ -14,7 +14,7 @@ import com.java.springdemo.service.UserService;
 
 @Configuration
 @EnableWebSecurity
-public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	// Add a reference to security data source
 	@Autowired
 	private UserService userService;
