@@ -1,0 +1,23 @@
+.failed {
+	color: rgb(188, 24, 16);
+	text-align: center;
+	font-size: 14px;
+	font-style: normal;
+	padding: 0px 37px 20px 37px;
+	display: inline-block;
+}
+
+.logout {
+	color: rgb(0, 128, 64);
+	text-align: center;
+	font-size: 14px;
+	font-style: normal;
+	padding: 0px 37px 20px 50px;
+	display: inline-block;
+}
+
+.error {
+	color: red;
+	padding: 5px;
+	font-size: 12px;
+}
