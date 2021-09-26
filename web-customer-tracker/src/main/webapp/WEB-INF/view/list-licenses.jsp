@@ -29,17 +29,17 @@
         <div id = content>
         
             <!-- Construct an Sort Link for Customer First Name -->
-            <c:url var = "sortLicenses" value = "/customer/licenses" >
+            <c:url var = "sortLicenses" value = "/license/list" >
                 <c:param name = "sort" value = "<%= Integer.toString(SortUtils.LICENSE_NAME) %>" />
             </c:url>
                     
             <!-- Construct an Sort Link for Customer Last Name -->
-            <c:url var = "sortStartDate" value = "/customer/licenses" >
+            <c:url var = "sortStartDate" value = "/license/list" >
                 <c:param name = "sort" value = "<%= Integer.toString(SortUtils.START_DATE) %>" />
             </c:url>
                     
             <!-- Construct an Sort Link for Customer Email -->
-            <c:url var = "sortExpirationDate" value = "/customer/licenses" >
+            <c:url var = "sortExpirationDate" value = "/license/list" >
                 <c:param name = "sort" value = "<%= Integer.toString(SortUtils.EXPIRATION_DATE) %>" />
             </c:url>
             
@@ -55,7 +55,7 @@
                 <!-- Loop Through and Print Out Customers Info -->
                 <c:forEach var = "license" items = "${licenses}">
                     <!-- Construct an "Delete" Link with License ID -->
-                    <c:url var = "deleteLink" value = "/customer/deleteLicense">
+                    <c:url var = "deleteLink" value = "/license/deleteLicense">
                         <c:param name = "licenseID" value = "${license.id}" />
                     </c:url>
                 

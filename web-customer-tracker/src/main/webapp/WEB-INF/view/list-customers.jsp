@@ -108,7 +108,16 @@
         	
         	<br>
      
-            <a href = "${pageContext.request.contextPath}/customer/licenses" >Licenses</a>
+            <a href = "${pageContext.request.contextPath}/license/list" >Licenses</a>
+            
+            
+            
+            <!-- Add a logout button -->
+			<form:form action="${pageContext.request.contextPath}/logout"
+				method="POST">
+		
+				<input type="submit" value="Logout" class = "add-button"/>
+			</form:form>
           
         </div>
     </div>
