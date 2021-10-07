@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+	<title>Licenses</title>
+
+	<!-- Bootstrap CSS -->
+	<link
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+		rel="stylesheet">
+	
+	<!-- Local CSS File -->
+	<link rel="stylesheet" th:href="@{/css/nav.css}" />
+</head>
+
+<body>
+
+	<!-- Navigation Bar -->
+	<nav class="navbar fixed-top navbar-expand-sm navbar-nav-scroll" style="background-color: #8080c0;">
+ 		<a class="navbar-brand nav-heading-brand ms-5" th:href="@{/employees}">CRM</a>
+        
+     	<ul class="navbar-nav me-auto mb-auto">
+	    	<li class="nav-item active">
+	        	<a class="nav-link nav-heading" th:href="@{/employees}">Home</a>
+	      	</li>
+	      
+	      	<li class="nav-item">
+	        	<a class="nav-link nav-heading" th:href="@{/customers/list}">Customers</a>
+	      	</li>
+	     
+	      	<li class="nav-item" sec:authorize = "hasAnyRole('ADMIN', 'MANAGER')">
+	        	<a class="nav-link nav-heading" th:href="@{/licenses/list}">Licenses</a>
+	      	</li>
+    	</ul>
+    	
+    	<!-- Logout Button -->
+        <div class = "navbar-nav ms-auto me-4">
+        	<!-- Display username of authenticated User -->
+        	<div sec:authentication="name" class = "me-4 mt-2 user"></div>
+        	
+			<form th:action = "@{/logout}" method = "POST">
+				<input type = "submit" value = "Logout" class = "btn btn-outline-dark">
+			</form>
+			
+        </div>
+    </nav>
+    
+    <br>
+
+	<div class = "container col-9">
+	
+		<h2 class = "nav-padding">Licenses</h2>
+		
+		<hr>
+		
+		<!-- Table to display License Info -->
+		<table class = "table table-bordered table-striped table-hover">
+			<thead class = "thead-dark">
+				<tr>
+					<th>License</th>
+					<th>Start Date</th>
+					<th>Expiration Date</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+	
+			<tbody>
+				<tr th:each="license : ${licenses}">
+					<td th:text="${license.licenseName}" />
+					<td th:text="${license.startDate}" />
+					<td th:text="${license.expirationDate}" />
+					
+					<!-- Link to Delete an existing License, when cicked a popup appears warning you whether or not to proceed with this action -->
+					<td>
+						<a th:href = "@{/licenses/deleteLicense(licenseId=${license.id})}"
+							class = "btn btn-danger btn-sm"
+							onclick = "if (!(confirm('Are you sure you want to delete this Employee?'))) return false;">
+							Delete
+						</a>
+					</td>
+				</tr>
+			</tbody>
+	
+		</table>
+		
+		<!-- Link to go back to 'customers/list' mapping -->
+		<a href = "#" th:href = "@{/customers/list}"
+			class = "btn btn-primary btn-sm mb-3">
+			Back to Customer List
+		</a>
+		
+	</div>
+
+</body>
+
+</html>
