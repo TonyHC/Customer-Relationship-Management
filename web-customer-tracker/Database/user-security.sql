@@ -14,9 +14,9 @@ CREATE TABLE user (
 );
 
 INSERT INTO user (username, password, first_name, last_name, email) VALUES 
-	('john','$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K','John','Doe','johndoe@mail.com'),
-	('mary','$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K','Mary','Public','mary@gmail.com'),
-	('susan','$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K','Susan','Adams','susanadams2@hotmail.com');
+	('Steve','$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K','Steve','Noles','steno@gmail.com'),
+	('rob@gmail.com','$2a$12$ZQ7ZB8IQplDGcQnknYWRq.JKk1nTZ18I.SwA1sVanHYilR9eDuDAm','Rob','Public','RP@gmail.com'),
+	('Mary','$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K','Mary','Adams','maryadams6@hotmail.com');
 
 DROP TABLE IF EXISTS role;
 
@@ -46,4 +46,3 @@ INSERT INTO users_roles (user_id,role_id) VALUES
 	(2, 2),
 	(3, 1),
 	(3, 3);
-
