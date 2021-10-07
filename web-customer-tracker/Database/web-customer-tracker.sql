@@ -12,11 +12,11 @@ CREATE TABLE customer (
 );
 
 INSERT INTO customer(first_name, last_name, email) VALUES 
-    ('David','Adams','david@luv2code.com'),
-	('John','Doe','john@luv2code.com'),
-	('Tommy','Rao','ajay@luv2code.com'),
-	('Mary','Jones','mary@luv2code.com'),
-	('Maxwell','Dixon','max@luv2code.com');
+    ('David','Adams','david@gmail.com'),
+	('John','Doe','johndoe2@yahoo.com'),
+	('Tommy','Rao','Ratos@hotmail.com'),
+	('Mary','Jones','maryJ@gmail.com'),
+	('Maxwell','Dixon','maxWells@gmail.com');
     
 DROP TABLE IF EXISTS license;
     
@@ -36,4 +36,3 @@ INSERT INTO license(license_name, start_date, expiration_date, customer_id)
         ('Photoshop', '2014/06/30 03:42:45', '2020/06/30 03:42:45', 1),
 		('Dreamweaver', '2014/06/30 07:14:25', '2025/06/30 07:14:25', 1),
 		('Indesign', '2014/06/30 11:56:44', '2019/06/30 11:56:44', 1);
-        
