@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"> 
+
+<head>
+	<title>Login Page</title>
+
+	<!-- Bootstrap CSS -->
+	<link
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+		rel="stylesheet">
+		
+	<!-- Local CSS Files -->
+	<link rel="stylesheet" th:href="@{/css/login.css}" />
+	<link rel="stylesheet" th:href="@{/css/message.css}" />
+	<link rel="stylesheet" th:href="@{/css/nav.css}" />
+</head>
+
+<body>
+
+	<!-- Navigation Bar -->
+	<nav class="navbar fixed-top navbar-expand-sm" style="background-color: #8080c0;">
+ 		<a class="navbar-brand nav-heading-brand ms-5" th:href="@{/}">CRM</a>
+        
+     	<ul class="navbar-nav me-auto mb-auto">
+	    	<li class="nav-item active">
+	        	<a class="nav-link nav-heading" th:href="@{/}">Home</a>
+	      	</li>
+	      	<li class="nav-item">
+	      		<a class = "nav-link nav-heading" th:href="@{/}">About</a>
+	      	</li>
+    	</ul>
+    	
+    	<!-- Login Button -->
+        <div class = "navbar-nav ms-auto me-4">
+        	<a th:href = "@{/login/showLoginPage}"
+				class = "btn btn-outline-dark">
+				Login
+			</a>
+        </div>
+    </nav>
+
+	<br><br><br><br>
+
+	<div class="login-card">
+	
+		<h1>Login</h1>
+		
+		<br>
+		
+		<!-- Send Form Data to Security Mapping for authentication '/authenticationUser' -->
+		<form action = "#" th:action = "@{/authenticateUser}"
+			method="POST">
+			
+			<!-- Check for Login Error and display Error Message -->
+			<div th:if = "${param.error}" class = "alert alert-danger">
+				Invalid Username and Password
+			</div>
+
+			<!-- Check for Logout Parameter and display Logout Message -->
+			<div th:if = "${param.logout}" class = "alert alert-success">
+				You have been logged out
+			</div>
+
+			<input type="text" name="username" placeholder="Username">
+			
+			<input type="password" name="password" placeholder="Password">
+			
+			<input type="submit" name="login" class="login login-submit" value="login">
+			
+		</form>
+
+		<!-- Link to Registration Page -->
+		<div class="login-help">
+			<a th:href="@{/register/showRegistrationForm}">Register</a>
+		</div>
+
+	</div>
+
+</body>
+
+</html>
