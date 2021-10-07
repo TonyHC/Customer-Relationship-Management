@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Registration Confirmation</title>
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
+		
+	<link rel="stylesheet" th:href="@{/css/message.css}" />
+	<link rel="stylesheet" th:href="@{/css/nav.css}" />
+</head>
+<body>
+
+	<!-- Navigation Bar -->
+	<nav class="navbar fixed-top navbar-expand-sm" style="background-color: #8080c0;">
+ 		<a class="navbar-brand nav-heading-brand ms-5" th:href="@{/}">CRM</a>
+        
+     	<ul class="navbar-nav me-auto mb-auto">
+	    	<li class="nav-item active">
+	        	<a class="nav-link nav-heading" th:href="@{/}">Home</a>
+	      	</li>
+    	</ul>
+    	
+    	<!-- Login Button -->
+        <div class = "navbar-nav ms-auto me-4">
+        	<a th:href = "@{/login/showLoginPage}"
+				class = "btn btn-outline-dark">
+				Login
+			</a>
+        </div>
+    </nav>
+
+	<br><br><br>
+
+	<div class = "container">
+		<h2>User Registered Successfully</h2>
+	
+		<hr>
+		
+		<!-- Link back to Login Page -->
+		<a th:href = "@{/login/showLoginPage}">Login Page</a>
+	</div>
+
+</body>
+
+</html>
