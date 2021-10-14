@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,7 +27,7 @@ public class UserServiceImplementation implements UserService {
 	private UserRepository userRepository;
 	
 	@Autowired
-	private RoleRepository roleRepostory;
+	private RoleRepository roleRepository;
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -75,13 +77,25 @@ public class UserServiceImplementation implements UserService {
 		// Save the User along with its Roles to DB
 		userRepository.save(user);
 	}
-	
+
 	// Helper method: Converts List<String> to List<Role>
 	private List<Role> userRoles(List<String> roles) {
 		List<Role> userRoles = new ArrayList<>();
 		for (String role : roles) {
-			userRoles.add(roleRepostory.findRoleByName(role));
+			userRoles.add(roleRepository.findRoleByName(role));
 		}
 		return userRoles;
+	}
+
+	@Override
+	public User retrieveAuthenticatedPrincipalByUsername() {
+		// Obtain the authentication request token of authenticated User (or authenticated principal - User's identity)
+		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+
+		// Get the User's identity (name or username)
+		String authenticatedUsername = loggedInUser.getName();
+
+		// Find and retrieve the registered User from DB using the username obtained from authenticated principal
+		return userRepository.findByUserName(authenticatedUsername);
 	}
 }
