@@ -2,6 +2,8 @@ package com.crm.customertracker.controller;
 
 import java.util.List;
 
+import com.crm.customertracker.entity.security.User;
+import com.crm.customertracker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,9 @@ import com.crm.customertracker.service.CustomerService;
 public class LicenseController {
 	@Autowired
 	private CustomerService customerService;
+
+	@Autowired
+	private UserService userService;
 	
 	@GetMapping("/list")
 	public String listLicenses(Model model) {
@@ -25,6 +30,12 @@ public class LicenseController {
 		
 		// Add all Licenses to Model Attribute
 		model.addAttribute("licenses", licenses);
+
+		// Obtain the authenticated User from User Service
+		User user = userService.retrieveAuthenticatedPrincipalByUsername();
+
+		// Add Authenticated User's First Name to Model Attribute
+		model.addAttribute("firstName", user.getFirstName());
 		
 		return "customers/list-licenses";
 	}
