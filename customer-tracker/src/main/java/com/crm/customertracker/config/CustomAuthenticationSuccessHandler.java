@@ -39,6 +39,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		session.setAttribute("user", user);
 		
 		// Forward that User to employees mapping when authentication (logging in) was successfully
-		response.sendRedirect(request.getContextPath() + "/employees");
+		response.sendRedirect(request.getContextPath() + "/employee/page");
 	}
 }
