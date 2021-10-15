@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import com.crm.customertracker.entity.security.User;
-import com.crm.customertracker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -27,10 +25,7 @@ import com.crm.customertracker.service.CustomerService;
 public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
-
-	@Autowired
-	private UserService userService;
-
+	
 	@GetMapping("/list")
 	public String listCustomers(Model model) {
 		/*
@@ -50,18 +45,12 @@ public class CustomerController {
 	
 	@GetMapping("/showFormForAddingCustomer")
 	public String showFormForAddingCustomer(Model model) {
-		// Create an empty Customer object
+		// Create a empty Customer object
 		Customer customer = new Customer();
-
-		// Obtain the authenticated User from User Service
-		User user = userService.retrieveAuthenticatedPrincipalByUsername();
-
+		
 		// Add empty Customer object to Model Attribute 
 		model.addAttribute("customer", customer);
-
-		// Add Authenticated User's First Name to Model Attribute
-		model.addAttribute("firstName", user.getFirstName());
-
+		
 		return "customers/customer-form";
 	}
 	
@@ -92,7 +81,7 @@ public class CustomerController {
 	
 	@GetMapping("/deleteCustomer") 
 	public String deleteCustomer(@RequestParam("customerId") int customerId) {
-		// Delete an existing Customer by its ID using Customer Service
+		// Delete a existing Customer by its ID using Customer Service
 		customerService.deleteCustomer(customerId);
 		
 		return "redirect:/customers/list";
@@ -100,23 +89,13 @@ public class CustomerController {
 	
 	@GetMapping("/licenses")
 	public String listCustomerLicenses(@RequestParam("customerId") int customerId, Model model) {
-		// Obtain the Customer along with its License using Customer Service
 		Customer customer = customerService.findCustomerLicenses(customerId);
-
-		// Add Customer to Model Attribute
+		
 		model.addAttribute("customer", customer);
-
-		// Retrieve all Licenses from Customer
+		
 		List<License> licenses = customer.getLicenses();
-
-		// Add License to Model Attribute
+		
 		model.addAttribute("licenses", licenses);
-
-		// Obtain the authenticated User from User Service
-		User user = userService.retrieveAuthenticatedPrincipalByUsername();
-
-		// Add Authenticated User's First Name to Model Attribute
-		model.addAttribute("firstName", user.getFirstName());
 		
 		return "customers/customer-licenses";
 	}
@@ -156,12 +135,6 @@ public class CustomerController {
 		
 		// Add List of Customers to Model Attribute
 		model.addAttribute("customers", customers);
-
-		// Obtain the authenticated User from User Service
-		User user = userService.retrieveAuthenticatedPrincipalByUsername();
-
-		// Add Authenticated User's First Name to Model Attribute
-		model.addAttribute("firstName", user.getFirstName());
 		
 		return "customers/list-customers";
 	}

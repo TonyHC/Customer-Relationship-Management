@@ -22,11 +22,11 @@
 
 	<!-- Navigation Bar -->
 	<nav class="navbar fixed-top navbar-expand-sm navbar-nav-scroll" style="background-color: #8080c0;">
- 		<a class="navbar-brand nav-heading-brand ms-5" th:href="@{/employee/page}">CRM</a>
+ 		<a class="navbar-brand nav-heading-brand ms-5" th:href="@{/employees}">CRM</a>
         
      	<ul class="navbar-nav me-auto mb-auto">
 	    	<li class="nav-item active">
-	        	<a class="nav-link nav-heading" th:href="@{/employee/page}">Home</a>
+	        	<a class="nav-link nav-heading" th:href="@{/employees}">Home</a>
 	      	</li>
 	      
 	      	<li class="nav-item">
@@ -41,7 +41,7 @@
     	<!-- Logout Button -->
         <div class = "navbar-nav ms-auto me-4">
         	<!-- Display username of authentication User -->
-			<a th:text="${firstName}" th:href="@{/employee/profile}" class = "me-4 mt-2 user"></a>
+        	<div sec:authentication="name" class = "me-4 mt-2 user"></div>
         	
 			<form th:action = "@{/logout}" method = "POST">
 				<input type = "submit" value = "Logout" class = "btn btn-outline-dark">
@@ -81,7 +81,7 @@
 						
 						<!-- Display total number of pages: 1 ... x -->
 						<span th:each="i: ${#numbers.sequence(1, totalPages)}">
-							<a th:if="${currentPage != i}" th:href="@{'/customers/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">[[${i}]]</a>
+							<a th:if="${currentPage != i}" th:href="@{'/customers/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirecion}}">[[${i}]]</a>
 							<span th:unless="${currentPage != i}">[[${i}]]</span>  &emsp;
 						</span>
 						
