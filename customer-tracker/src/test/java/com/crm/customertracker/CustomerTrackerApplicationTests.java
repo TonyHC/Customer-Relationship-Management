@@ -1,40 +1,100 @@
 package com.crm.customertracker;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import com.crm.customertracker.entity.customer.Customer;
+import com.crm.customertracker.entity.security.User;
+import com.crm.customertracker.service.CustomerService;
+import com.crm.customertracker.service.UserService;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.function.Executable;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import com.crm.customertracker.entity.customer.Customer;
-import com.crm.customertracker.repository.customer.CustomerRepository;
+import java.util.List;
 
-@RunWith(SpringRunner.class)
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.*;
+
+@ExtendWith(MockitoExtension.class)
 @SpringBootTest
 class CustomerTrackerApplicationTests {
 	@Autowired
-	private CustomerRepository customerRepository;
+	private CustomerService customerService;
 
-	private Customer customer;
+	@Autowired
+	private UserService userService;
 
-	@Before
-	public void initializeDataObjects() {
-		customer = new Customer();
-		
-		customer.setFirstName("Tom");
-		customer.setLastName("Marks");
-		customer.setEmail("TM@mail.com");
+	@Nested
+	class CustomerTests {
+		@Test
+		void Should_ReturnAllCustomers_When_CallFindAllCustomers() {
+			// Given
+			int numOfCustomers = 5;
+
+			// When
+			List<Customer> customers = customerService.findAllCustomers();
+
+			// Then
+			assertThat(customers.size(), is(numOfCustomers));
+		}
+
+		@Test
+		void Should_UpdateCustomerLastName_When_CallSaveCustomer() {
+			// Given
+			Customer customer = customerService.findCustomerById(3);
+			customer.setLastName("Jones");
+
+			// When
+			customerService.saveCustomer(customer);
+
+			// Then
+			assertAll(
+					() -> assertEquals("Jones", customer.getLastName()),
+					() -> assertEquals(3, customer.getId())
+			);
+		}
+
+		@Test
+		void Should_ReturnListOfCustomers_When_CallFindCustomersByName() {
+			// Given
+			int expectedCustomers = 2;
+
+			// When
+			List<Customer> customers = customerService.findCustomersByName("Ma");
+
+			// Then
+			assertThat(customers.size(), is(expectedCustomers));
+		}
+
+		@Test
+		void Should_ThrowRuntimeException_When_CustomerIdDoesNotExist() {
+			// Given
+			int customerId = 62;
+
+			// When
+			Executable executable = () -> customerService.findCustomerById(customerId);
+
+			// Then
+			assertThrows(RuntimeException.class, executable);
+		}
 	}
-	
-	@Test
-	public void shouldSaveCustomerToDB() {
-		Customer saveCustomer = customerRepository.save(customer);
-		Optional<Customer> customerFromDB = customerRepository.findById(saveCustomer.getId());
-		assertTrue(customerFromDB.isPresent());
+
+	@Nested
+	class UserTests {
+		@Test
+		void Should_ReturnUser_When_CallFindByUserName() {
+			// Given
+			String authenticatedName = "John";
+
+			// When
+			User user = userService.findByUserName("john");
+
+			// Then
+			assertEquals(user.getFirstName(), authenticatedName);
+		}
 	}
 }
