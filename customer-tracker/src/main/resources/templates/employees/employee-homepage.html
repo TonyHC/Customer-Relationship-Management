@@ -2,48 +2,48 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
-	<title>Employees Page</title>
+    <title>Employees Page</title>
 
-	<!-- Bootstrap CSS -->
-	<link
-			href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
-			rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+            rel="stylesheet">
 
-	<!-- Local CSS File -->
-	<link rel="stylesheet" th:href="@{/css/nav.css}" />
+    <!-- Local CSS File -->
+    <link rel="stylesheet" th:href="@{/css/nav.css}"/>
 </head>
 
 <body>
 
 <!-- Navigation Bar -->
 <nav class="navbar fixed-top navbar-expand-sm" style="background-color: #8080c0;">
-	<a class="navbar-brand nav-heading-brand ms-5" th:href="@{/employee/page}">CRM</a>
+    <a class="navbar-brand nav-heading-brand ms-5" th:href="@{/employee/page}">CRM</a>
 
-	<ul class="navbar-nav me-auto mb-auto">
-		<li class="nav-item active">
-			<a class="nav-link nav-heading" th:href="@{/employee/page}">Home</a>
-		</li>
+    <ul class="navbar-nav me-auto mb-auto">
+        <li class="nav-item active">
+            <a class="nav-link nav-heading" th:href="@{/employee/page}">Home</a>
+        </li>
 
-		<li class="nav-item">
-			<a class="nav-link nav-heading" th:href="@{/customers/list}">Customers</a>
-		</li>
+        <li class="nav-item">
+            <a class="nav-link nav-heading" th:href="@{/customers/list}">Customers</a>
+        </li>
 
-		<li class="nav-item" sec:authorize = "hasAnyRole('ADMIN','MANAGER')">
-			<a class="nav-link nav-heading" th:href="@{/licenses/list}">Licenses</a>
-		</li>
-	</ul>
+        <li class="nav-item" sec:authorize="hasAnyRole('ADMIN','MANAGER')">
+            <a class="nav-link nav-heading" th:href="@{/licenses/list}">Licenses</a>
+        </li>
+    </ul>
 
-	<!-- Logout Button -->
-	<div class = "navbar-nav ms-auto me-4">
+    <!-- Logout Button -->
+    <div class="navbar-nav ms-auto me-4">
 
-		<!-- Display First Name of authenticated User -->
-		<a th:text="${firstName}" th:href="@{/employee/profile}" class = "me-4 mt-2 user"></a>
+        <!-- Display First Name of authenticated User -->
+        <a th:text="${firstName}" th:href="@{/employee/profile}" class="me-4 mt-2 user"></a>
 
-		<form th:action = "@{/logout}" method = "POST">
-			<input type = "submit" value = "Logout" class = "btn btn-outline-dark">
-		</form>
+        <form th:action="@{/logout}" method="POST">
+            <input type="submit" value="Logout" class="btn btn-outline-dark">
+        </form>
 
-	</div>
+    </div>
 </nav>
 
 <br><br>
