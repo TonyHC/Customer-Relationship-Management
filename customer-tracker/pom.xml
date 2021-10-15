@@ -7,11 +7,11 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.5.5</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<relativePath />
 	</parent>
 	<groupId>com.crm</groupId>
 	<artifactId>customer-tracker</artifactId>
-	<version>1.0</version>
+	<version>2.0</version>
 	<packaging>war</packaging>
 	<name>customer-tracker</name>
 	<description>Demo project for Spring Boot</description>
