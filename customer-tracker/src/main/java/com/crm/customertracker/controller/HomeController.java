@@ -9,9 +9,4 @@ public class HomeController {
 	public String homePage() {
 		return "home";
 	}
-	
-	@GetMapping("/employees")
-	public String employeesPage() {
-		return "employees";
-	}
 }
