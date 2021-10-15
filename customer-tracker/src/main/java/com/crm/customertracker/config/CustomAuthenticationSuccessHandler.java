@@ -20,25 +20,25 @@ import com.crm.customertracker.service.UserService;
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 	@Autowired
 	private UserService userService;
-	
+
 	private Logger logger = Logger.getLogger(getClass().getName());
-	
+
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-			Authentication authentication) throws IOException, ServletException {
+										Authentication authentication) throws IOException, ServletException {
 		logger.info("In onAuthenticationSuccess()");
 
 		String username = authentication.getName();
 		logger.info("Username: " + username);
-		
+
 		// Find a User by its username
 		User user = userService.findByUserName(username);
-		
+
 		// Place a User found in DB into a HTTP Session
 		HttpSession session = request.getSession();
 		session.setAttribute("user", user);
-		
+
 		// Forward that User to employees mapping when authentication (logging in) was successfully
-		response.sendRedirect(request.getContextPath() + "/employees");
+		response.sendRedirect(request.getContextPath() + "/employee/page");
 	}
 }
