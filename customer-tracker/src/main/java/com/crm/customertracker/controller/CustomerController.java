@@ -87,6 +87,12 @@ public class CustomerController {
 		// Add the existing Customer to the Model Attribute to populate the Form
 		model.addAttribute("customer", customer);
 
+		// Obtain the authenticated User from User Service
+		User user = userService.retrieveAuthenticatedPrincipalByUsername();
+
+		// Add Authenticated User's First Name to Model Attribute
+		model.addAttribute("firstName", user.getFirstName());
+
 		return "customers/customer-form";
 	}
 
