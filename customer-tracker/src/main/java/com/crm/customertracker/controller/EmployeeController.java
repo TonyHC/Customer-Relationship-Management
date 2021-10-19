@@ -19,11 +19,7 @@ public class EmployeeController {
     private PasswordHider passwordHider;
 
     @GetMapping("/page")
-    public String getEmployeeHomePage(Model model) {
-        User user = userService.retrieveAuthenticatedPrincipalByUsername();
-
-        model.addAttribute("firstName", user.getFirstName());
-
+    public String getEmployeeHomePage() {
         return "employees/employee-homepage";
     }
 
@@ -41,5 +37,16 @@ public class EmployeeController {
         model.addAttribute("maskedPassword", passwordHider.passwordMasking(user.getPassword()));
 
         return "employees/employee-profile";
+    }
+
+    @GetMapping("/logout")
+    public String getLogoutNavBar(Model model) {
+        // Obtain the authenticated User from User Service
+        User user = userService.retrieveAuthenticatedPrincipalByUsername();
+
+        // Add Authenticated User's First Name to Model Attribute
+        model.addAttribute("firstName", user.getFirstName());
+
+        return "fragments/nav-logout";
     }
 }
