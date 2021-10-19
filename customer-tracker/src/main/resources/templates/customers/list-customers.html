@@ -2,161 +2,136 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
-	<title>Customers</title>
+    <title>Customers</title>
 
-	<!-- Bootstrap CSS -->
-	<link
-			href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
-			rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+            rel="stylesheet">
 
-	<!-- Local JS File -->
-	<script type = "text/javascript"
-			th:src = "@{/javascript/deleteWarning.js}">
-	</script>
+    <!-- Local JS File -->
+    <script type="text/javascript"
+            th:src="@{/javascript/deleteWarning.js}">
+    </script>
 
-	<!-- Local CSS File -->
-	<link rel="stylesheet" th:href="@{/css/nav.css}" />
+    <!-- Local CSS File -->
+    <link rel="stylesheet" th:href="@{/css/nav.css}"/>
 </head>
 
 <body>
 
-<!-- Navigation Bar -->
-<nav class="navbar fixed-top navbar-expand-sm navbar-nav-scroll" style="background-color: #8080c0;">
-	<a class="navbar-brand nav-heading-brand ms-5" th:href="@{/employee/page}">CRM</a>
-
-	<ul class="navbar-nav me-auto mb-auto">
-		<li class="nav-item active">
-			<a class="nav-link nav-heading" th:href="@{/employee/page}">Home</a>
-		</li>
-
-		<li class="nav-item">
-			<a class="nav-link nav-heading" th:href="@{/customers/list}">Customers</a>
-		</li>
-
-		<li class="nav-item" sec:authorize = "hasAnyRole('ADMIN', 'MANAGER')">
-			<a class="nav-link nav-heading" th:href="@{/licenses/list}">Licenses</a>
-		</li>
-	</ul>
-
-	<!-- Logout Button -->
-	<div class = "navbar-nav ms-auto me-4">
-		<!-- Display username of authentication User -->
-		<a th:text="${firstName}" th:href="@{/employee/profile}" class = "me-4 mt-2 user"></a>
-
-		<form th:action = "@{/logout}" method = "POST">
-			<input type = "submit" value = "Logout" class = "btn btn-outline-dark">
-		</form>
-
-	</div>
-</nav>
+<nav th:insert="fragments/nav-logout.html :: nav"></nav>
 
 <br>
 
-<div class = "container col-9">
+<div class="container col-9">
 
-	<h2 class = "nav-padding">Customers</h2>
+    <h2 class="nav-padding">Customers</h2>
 
-	<hr>
+    <hr>
 
-	<!-- Search Button: Sends User input data to GET Mapping 'customers/searchCustomers' -->
-	<form th:action = "@{/customers/searchCustomers}" class = "form-inline">
+    <!-- Search Button: Sends User input data to GET Mapping 'customers/searchCustomers' -->
+    <form th:action="@{/customers/searchCustomers}" class="form-inline">
 
-		<input class = "form control ml-5 mr-sm-2 mb-3" type = "search"
-			   name = "customerName" placeholder = "Search by Name" />
+        <input class="form control ml-5 mr-sm-2 mb-3" type="search"
+               name="customerName" placeholder="Search by Name"/>
 
-		<button class = "btn btn-success mb-2 btn-sm" type = "submit">Search</button>
+        <button class="btn btn-success mb-2 btn-sm" type="submit">Search</button>
 
-	</form>
+    </form>
 
-	<!-- Table to display Customer Info -->
-	<table class = "table table-bordered table-striped table-hover table-responsive">
-		<thead>
-		<caption>
+    <!-- Table to display Customer Info -->
+    <table class="table table-bordered table-striped table-hover table-responsive">
+        <thead>
+        <caption>
 
-			<!-- If total number of Pages (Page Size = 5) is greater than one, execute the following -->
-			<span th:if = "${totalPages > 1}">
+            <!-- If total number of Pages (Page Size = 5) is greater than one, execute the following -->
+            <span th:if="${totalPages > 1}">
 
 						<!-- Total number of Customers in DB -->
 						Customers: [[${totalItems}]] &emsp; &emsp;
 
-				<!-- Display total number of pages: 1 ... x -->
+                <!-- Display total number of pages: 1 ... x -->
 						<span th:each="i: ${#numbers.sequence(1, totalPages)}">
-							<a th:if="${currentPage != i}" th:href="@{'/customers/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">[[${i}]]</a>
+							<a th:if="${currentPage != i}"
+                               th:href="@{'/customers/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">[[${i}]]</a>
 							<span th:unless="${currentPage != i}">[[${i}]]</span>  &emsp;
 						</span>
 
-				<!-- If current page number is less than total number of pages, then display a link to go to next page -->
-				<!-- Else display the text 'Next' -->
-						<a th:if="${currentPage < totalPages}" th:href="@{'/customers/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">Next</a>
+                <!-- If current page number is less than total number of pages, then display a link to go to next page -->
+                <!-- Else display the text 'Next' -->
+						<a th:if="${currentPage < totalPages}"
+                           th:href="@{'/customers/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">Next</a>
 						<span th:unless="${currentPage < totalPages}">Next</span> &nbsp; &nbsp;
 
-				<!-- If current page number is less than total number of pages, then display a link to go to the last page -->
-				<!-- Else display the text 'Last' -->
-						<a th:if="${currentPage < totalPages}" th:href="@{'/customers/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">Last</a>
+                <!-- If current page number is less than total number of pages, then display a link to go to the last page -->
+                <!-- Else display the text 'Last' -->
+						<a th:if="${currentPage < totalPages}"
+                           th:href="@{'/customers/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">Last</a>
 						<span th:unless="${currentPage < totalPages}">Last</span>
 					
 					</span>
 
-		</caption>
+        </caption>
 
-		<!-- Add Support for Sorting Table's Columns using Pagination -->
-		<tr>
-			<th>
-				<a th:href = "@{'/customers/page/' + ${currentPage} + '?sortField=firstName' + '&sortDirection=' + ${reverseSortDirection}}">
-					First Name</a>
-			</th>
-			<th>
-				<a th:href = "@{'/customers/page/' + ${currentPage} + '?sortField=lastName' + '&sortDirection=' + ${reverseSortDirection}}">
-					Last Name</a>
-			</th>
-			<th>
-				<a th:href = "@{'/customers/page/' + ${currentPage} + '?sortField=email' + '&sortDirection=' + ${reverseSortDirection}}">
-					Email</a>
-			</th>
-			<th>Actions</th>
-		</tr>
-		</thead>
+        <!-- Add Support for Sorting Table's Columns using Pagination -->
+        <tr>
+            <th>
+                <a th:href="@{'/customers/page/' + ${currentPage} + '?sortField=firstName' + '&sortDirection=' + ${reverseSortDirection}}">
+                    First Name</a>
+            </th>
+            <th>
+                <a th:href="@{'/customers/page/' + ${currentPage} + '?sortField=lastName' + '&sortDirection=' + ${reverseSortDirection}}">
+                    Last Name</a>
+            </th>
+            <th>
+                <a th:href="@{'/customers/page/' + ${currentPage} + '?sortField=email' + '&sortDirection=' + ${reverseSortDirection}}">
+                    Email</a>
+            </th>
+            <th>Actions</th>
+        </tr>
+        </thead>
 
-		<tbody>
-		<tr th:each="tempCustomer : ${customers}">
-			<td th:text="${tempCustomer.firstName}" />
-			<td th:text="${tempCustomer.lastName}" />
-			<td th:text="${tempCustomer.email}" />
+        <tbody>
+        <tr th:each="tempCustomer : ${customers}">
+            <td th:text="${tempCustomer.firstName}"/>
+            <td th:text="${tempCustomer.lastName}"/>
+            <td th:text="${tempCustomer.email}"/>
 
-			<!-- Add an Link for Updating, Deleting Customer or Viewing a Customer's License(s) -->
-			<td>
-				<a th:href = "@{/customers/showFormForUpdatingCustomer(customerId=${tempCustomer.id})}"
-				   class = "btn btn-info btn-sm">
-					Update
-				</a>
+            <!-- Add an Link for Updating, Deleting Customer or Viewing a Customer's License(s) -->
+            <td>
+                <a th:href="@{/customers/showFormForUpdatingCustomer(customerId=${tempCustomer.id})}"
+                   class="btn btn-info btn-sm">
+                    Update
+                </a>
 
-				<a th:href = "@{/customers/deleteCustomer(customerId=${tempCustomer.id})}"
-				   class = "btn btn-danger btn-sm"
-				   onclick = "if (!(confirm('Are you sure you want to delete this Employee?'))) return false;">
-					Delete
-				</a>
+                <a th:href="@{/customers/deleteCustomer(customerId=${tempCustomer.id})}"
+                   class="btn btn-danger btn-sm"
+                   onclick="if (!(confirm('Are you sure you want to delete this Employee?'))) return false;">
+                    Delete
+                </a>
 
-				<a th:href = "@{/customers/licenses(customerId=${tempCustomer.id})}"
-				   class = "btn btn-info btn-sm">
-					License
-				</a>
-			</td>
-		</tr>
-		</tbody>
+                <a th:href="@{/customers/licenses(customerId=${tempCustomer.id})}"
+                   class="btn btn-info btn-sm">
+                    License
+                </a>
+            </td>
+        </tr>
+        </tbody>
 
-	</table>
+    </table>
 
-	<!-- Link to go to Form to add a new Customer -->
-	<a href = "#" th:href = "@{/customers/showFormForAddingCustomer}"
-	   class = "btn btn-primary btn-sm mb-3">
-		Add Customer
-	</a>
+    <!-- Link to go to Form to add a new Customer -->
+    <a href="#" th:href="@{/customers/showFormForAddingCustomer}"
+       class="btn btn-primary btn-sm mb-3">
+        Add Customer
+    </a>
 
-	<!-- Link to view all Licenses -->
-	<a href = "#" th:href = "@{/licenses/list}"
-	   class = "btn btn-info btn-sm mb-3">
-		Licenses
-	</a>
+    <!-- Link to view all Licenses -->
+    <a href="#" th:href="@{/licenses/list}"
+       class="btn btn-info btn-sm mb-3">
+        Licenses
+    </a>
 
 </div>
 
