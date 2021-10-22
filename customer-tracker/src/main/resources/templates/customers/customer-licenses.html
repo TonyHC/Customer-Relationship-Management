@@ -25,29 +25,33 @@
 
     <hr>
 
-    <!-- Table to Display Customer along with their Licenses Info -->
-    <table class="table table-bordered table-striped table-hover">
-        <thead class="thead-dark">
-        <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>License</th>
-            <th>Start Date</th>
-            <th>Expiration Date</th>
-        </tr>
-        </thead>
+    <!-- If Customer has License(s), then display the Licenses in a Table -->
+    <!-- Else Customer has no License(s), then don't display the table containing Customer's License(s)-->
+    <div th:if="${not #lists.isEmpty(licenses)}">
+        <!-- Table to Display Customer along with their Licenses Info -->
+        <table class="table table-bordered table-striped table-hover">
+            <thead class="thead-dark">
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>License</th>
+                <th>Start Date</th>
+                <th>Expiration Date</th>
+            </tr>
+            </thead>
 
-        <tbody>
-        <tr th:each="license : ${licenses}">
-            <td th:text="${customer.firstName}"/>
-            <td th:text="${customer.lastName}"/>
-            <td th:text="${license.licenseName}"/>
-            <td th:text="${license.startDate}"/>
-            <td th:text="${license.expirationDate}"/>
-        </tr>
-        </tbody>
+            <tbody>
+            <tr th:each="license : ${licenses}">
+                <td th:text="${customer.firstName}"></td>
+                <td th:text="${customer.lastName}"></td>
+                <td th:text="${license.licenseName}"></td>
+                <td th:text="${license.startDate}"></td>
+                <td th:text="${license.expirationDate}"></td>
+            </tr>
+            </tbody>
 
-    </table>
+        </table>
+    </div>
 
     <!-- Link back to mapping 'customers/list' -->
     <a href="#" th:href="@{/customers/list}"
