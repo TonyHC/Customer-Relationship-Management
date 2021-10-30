@@ -78,6 +78,11 @@ public class UserServiceImplementation implements UserService {
 		userRepository.save(user);
 	}
 
+	@Override
+	public void saveUser(User user) {
+		userRepository.save(user);
+	}
+
 	// Helper method: Converts List<String> to List<Role>
 	private List<Role> userRoles(List<String> roles) {
 		List<Role> userRoles = new ArrayList<>();
