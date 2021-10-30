@@ -18,17 +18,33 @@
 <nav th:insert="fragments/nav-logout.html :: nav"></nav>
 
 <br><br>
-<div class="card ms-5 mt-5 w-50">
+<div class="card ms-5 mt-5" style="width: 32rem;">
 
-    <h5 class="card-header"><span th:text="${firstName}"></span> Profile</h5>
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-10 mt-3">
+                <h5><span th:text="${firstName} + '' "></span> Profile</h5>
+            </div>
+
+            <div class="col-md-1 mt-2">
+                <a class="btn btn-default me-3" th:href="@{/employee/image}">Image</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- If User hasn't uploaded a profile picture, use the default picture provided.
+         Otherwise, use the uploaded picture provided by the User-->
+    <div th:with="img=${user.getImage() == null} ? '/images/Avatar.jpg' : '/employee/profileImage'">
+        <img th:src="${img}" width="100%" height="auto">
+    </div>
 
     <ui class="list-group list-group-flush">
-        <li class="list-group-item">Employee ID: <span th:text="${employeeId}"></span></li>
-        <li class="list-group-item">Username: <span th:text="${username}"></span></li>
+        <li class="list-group-item">Employee ID: <span th:text="${user.getId()}"></span></li>
+        <li class="list-group-item">Username: <span th:text="${user.getUsername()}"></span></li>
         <li class="list-group-item">Password: <span th:text="${maskedPassword}"></span></li>
-        <li class="list-group-item">First Name: <span th:text="${firstName}"></span></li>
-        <li class="list-group-item">Last Name: <span th:text="${lastName}"></span></li>
-        <li class="list-group-item">Email: <span th:text="${email}"></span></li>
+        <li class="list-group-item">First Name: <span th:text="${user.getFirstName()}"></span></li>
+        <li class="list-group-item">Last Name: <span th:text="${user.getLastName()}"></span></li>
+        <li class="list-group-item">Email: <span th:text="${user.getEmail()}"></span></li>
     </ui>
 
 </div>

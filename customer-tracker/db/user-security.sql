@@ -7,10 +7,11 @@ DROP TABLE IF EXISTS user;
 CREATE TABLE user (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	username VARCHAR(50) NOT NULL,
-    password char(80) NOT NULL,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    email VARCHAR(50) NOT NULL
+    	password char(80) NOT NULL,
+    	first_name VARCHAR(50) NOT NULL,
+    	last_name VARCHAR(50) NOT NULL,
+    	email VARCHAR(50) NOT NULL,
+	image MEDIUMBLOB
 );
 
 INSERT INTO user (username, password, first_name, last_name, email) VALUES 

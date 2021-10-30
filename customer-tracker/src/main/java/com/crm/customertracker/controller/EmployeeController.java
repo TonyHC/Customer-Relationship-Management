@@ -19,7 +19,13 @@ public class EmployeeController {
     private PasswordHider passwordHider;
 
     @GetMapping("/page")
-    public String getEmployeeHomePage() {
+    public String getEmployeeHomePage(Model model) {
+        // Obtain the authenticated User from User Service
+        User user = userService.retrieveAuthenticatedPrincipalByUsername();
+
+        // Add Authenticated User properties to Model Attribute
+        model.addAttribute("firstName", user.getFirstName());
+
         return "employees/employee-homepage";
     }
 
@@ -29,11 +35,7 @@ public class EmployeeController {
         User user = userService.retrieveAuthenticatedPrincipalByUsername();
 
         // Add Authenticated User properties to Model Attribute
-        model.addAttribute("firstName", user.getFirstName());
-        model.addAttribute("lastName", user.getLastName());
-        model.addAttribute("email", user.getEmail());
-        model.addAttribute("employeeId", user.getId());
-        model.addAttribute("username", user.getUsername());
+        model.addAttribute("user", user);
         model.addAttribute("maskedPassword", passwordHider.passwordMasking(user.getPassword()));
 
         return "employees/employee-profile";

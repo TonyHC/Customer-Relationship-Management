@@ -1,18 +1,9 @@
 package com.crm.customertracker.entity.security;
 
+import java.util.Arrays;
 import java.util.Collection;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "user")
@@ -36,8 +27,12 @@ public class User {
 	
 	@Column(name = "email")
 	private String email;
+
+	@Lob
+	private Byte[] image;
 	
-	// CascadeType.MERGE because Role already exists in DB and we're trying to insert already persisted Role (Role is automatically merged instead)
+	// CascadeType.MERGE because Role already exists in DB, and we're trying to insert already persisted Role
+	// (Role is automatically merged instead)
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
 	@JoinTable(name = "users_roles",
 			joinColumns = @JoinColumn(name = "user_id"),
@@ -104,6 +99,14 @@ public class User {
 		this.email = email;
 	}
 
+	public Byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(Byte[] image) {
+		this.image = image;
+	}
+
 	public Collection<Role> getRoles() {
 		return roles;
 	}
@@ -114,7 +117,14 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", email=" + email + ", roles=" + roles + "]";
+		return "User{" +
+				"id=" + id +
+				", username='" + username + '\'' +
+				", password='" + password + '\'' +
+				", firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", email='" + email + '\'' +
+				", roles=" + roles +
+				'}';
 	}
 }

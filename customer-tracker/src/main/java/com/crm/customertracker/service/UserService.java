@@ -10,5 +10,6 @@ import com.crm.customertracker.model.RegisterUser;
 public interface UserService extends UserDetailsService {
     User findByUserName(String userName);
     void saveUser(RegisterUser registerUser, List<String> roles);
+    void saveUser(User user);
     User retrieveAuthenticatedPrincipalByUsername();
 }
