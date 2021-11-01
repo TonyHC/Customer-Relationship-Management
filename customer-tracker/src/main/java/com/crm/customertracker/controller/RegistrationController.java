@@ -44,15 +44,21 @@ public class RegistrationController {
 		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
 		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
 	}
+
+	@ModelAttribute("registerUser")
+	public RegisterUser getNewRegisterUser() {
+		// Add an empty RegisterUser object to Model Attribute for Form Validation
+		return new RegisterUser();
+	}
+
+	@ModelAttribute("roles")
+	public Map<String, String> getSecurityRoles() {
+		// Add all the Security Roles to Model Attribute for the Drop Down List
+		return roles;
+	}
 	
 	@GetMapping("/showRegistrationForm")
 	public String showRegistrationForm(Model model) {
-		// Add an empty RegisterUser object to Model Attribute for Form Validation
-		model.addAttribute("registerUser", new RegisterUser());
-		
-		// Add all the Security Roles to Model Attribute
-		model.addAttribute("roles", roles);
-		
 		return "security/registration-form";
 	}
 	
@@ -64,17 +70,12 @@ public class RegistrationController {
 		
 		// Registration Form Validation to check if any Constraint Validators were violated
 		if (bindingResult.hasErrors()) {
-			// Re-Populate the Security Roles
-			model.addAttribute("roles", roles);
 			// Send back to Registration Form
 			return "security/registration-form";
 		}
 		
 		// Check if Username already exists in DB
 		if (userService.findByUserName(username) != null) {
-			model.addAttribute("registerUser", new RegisterUser());
-			model.addAttribute("roles", roles);
-			
 			model.addAttribute("registrationError", "Username already exists");
 			logger.warning("Username already exists");
 			

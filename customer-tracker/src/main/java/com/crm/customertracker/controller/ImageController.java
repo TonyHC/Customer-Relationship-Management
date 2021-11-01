@@ -39,8 +39,10 @@ public class ImageController {
 
     @PostMapping("/employee/image")
     public String processImageUploadForm(@RequestParam("imageFile") MultipartFile file) {
+        // Retrieved the Authenticated User's Username
         String username = userService.retrieveAuthenticatedPrincipalByUsername().getUsername();
 
+        // Call the Image Service's saveImage(...) to save the Image uploaded by the User
         imageService.saveImage(username, file);
 
         return "redirect:/employee/profile";
@@ -48,18 +50,27 @@ public class ImageController {
 
     @GetMapping("/employee/profileImage")
     public void renderImageFromDB(HttpServletResponse response) throws IOException {
+        // Obtain the authenticated User from User Service
         User user = userService.retrieveAuthenticatedPrincipalByUsername();
 
+        // If the User has uploaded an Image
         if (user.getImage() != null) {
+            // Create a primitive byte array of same size as number of bytes in the image uploaded
             byte[] byteArray = new byte[user.getImage().length];
-            int i = 0;
 
+            // Convert the wrapper Bytes to primitive bytes
+            int i = 0;
             for (Byte wrappedByte : user.getImage()){
                 byteArray[i++] = wrappedByte; //auto unboxing
             }
 
+            // Set the HttpServletResponse as image type of jpeg
             response.setContentType("image/jpeg");
+
+            // Set the InputStream as the bytes of the uploaded Image
             InputStream is = new ByteArrayInputStream(byteArray);
+
+            // Render the Uploaded Image byte's to output the Image to the User's Profile Page
             IOUtils.copy(is, response.getOutputStream());
         }
     }

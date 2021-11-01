@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -18,14 +19,17 @@ public class EmployeeController {
     @Autowired
     private PasswordHider passwordHider;
 
-    @GetMapping("/page")
-    public String getEmployeeHomePage(Model model) {
+    @ModelAttribute("firstName")
+    public String getAuthenticatedUserFirstName() {
         // Obtain the authenticated User from User Service
         User user = userService.retrieveAuthenticatedPrincipalByUsername();
 
-        // Add Authenticated User properties to Model Attribute
-        model.addAttribute("firstName", user.getFirstName());
+        // Add Authenticated User's First Name to Model Attribute
+        return user.getFirstName();
+    }
 
+    @GetMapping("/page")
+    public String getEmployeeHomePage(Model model) {
         return "employees/employee-homepage";
     }
 
@@ -43,12 +47,6 @@ public class EmployeeController {
 
     @GetMapping("/logout")
     public String getLogoutNavBar(Model model) {
-        // Obtain the authenticated User from User Service
-        User user = userService.retrieveAuthenticatedPrincipalByUsername();
-
-        // Add Authenticated User's First Name to Model Attribute
-        model.addAttribute("firstName", user.getFirstName());
-
         return "fragments/nav-logout";
     }
 }

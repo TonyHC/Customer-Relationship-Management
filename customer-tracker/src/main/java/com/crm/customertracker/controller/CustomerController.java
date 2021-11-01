@@ -31,18 +31,17 @@ public class CustomerController {
 	@Autowired
 	private UserService userService;
 
+	@ModelAttribute("firstName")
+	public String getAuthenticatedUserFirstName() {
+		// Obtain the authenticated User from User Service
+		User user = userService.retrieveAuthenticatedPrincipalByUsername();
+
+		// Add Authenticated User's First Name to Model Attribute
+		return user.getFirstName();
+	}
+
 	@GetMapping("/list")
 	public String listCustomers(Model model) {
-		/*
-			// Get all Customers from Customer Service
-			List<Customer> customers = customerService.findAllCustomers();
-
-			// Add Customers to Model Attribute
-			model.addAttribute("customers", customers);
-
-			return "customers/list-customers";
-		*/
-
 		// Call the findPaginated(): Set the starting page number (zero-based), sort field,
 		// sort direction, and model object
 		return findPaginated(1, "firstName", "asc", model);
@@ -53,14 +52,8 @@ public class CustomerController {
 		// Create an empty Customer object
 		Customer customer = new Customer();
 
-		// Obtain the authenticated User from User Service
-		User user = userService.retrieveAuthenticatedPrincipalByUsername();
-
 		// Add empty Customer object to Model Attribute
 		model.addAttribute("customer", customer);
-
-		// Add Authenticated User's First Name to Model Attribute
-		model.addAttribute("firstName", user.getFirstName());
 
 		return "customers/customer-form";
 	}
@@ -87,12 +80,6 @@ public class CustomerController {
 		// Add the existing Customer to the Model Attribute to populate the Form
 		model.addAttribute("customer", customer);
 
-		// Obtain the authenticated User from User Service
-		User user = userService.retrieveAuthenticatedPrincipalByUsername();
-
-		// Add Authenticated User's First Name to Model Attribute
-		model.addAttribute("firstName", user.getFirstName());
-
 		return "customers/customer-form";
 	}
 
@@ -117,12 +104,6 @@ public class CustomerController {
 
 		// Add License to Model Attribute
 		model.addAttribute("licenses", licenses);
-
-		// Obtain the authenticated User from User Service
-		User user = userService.retrieveAuthenticatedPrincipalByUsername();
-
-		// Add Authenticated User's First Name to Model Attribute
-		model.addAttribute("firstName", user.getFirstName());
 
 		return "customers/customer-licenses";
 	}
@@ -162,12 +143,6 @@ public class CustomerController {
 
 		// Add List of Customers to Model Attribute
 		model.addAttribute("customers", customers);
-
-		// Obtain the authenticated User from User Service
-		User user = userService.retrieveAuthenticatedPrincipalByUsername();
-
-		// Add Authenticated User's First Name to Model Attribute
-		model.addAttribute("firstName", user.getFirstName());
 
 		return "customers/list-customers";
 	}
