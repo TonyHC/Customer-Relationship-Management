@@ -37,10 +37,10 @@
 				[[${registrationError}]]
 			</div>
 			
-			<!-- Display All Field Errors for RegisterUser
-			<div class = "failed">
-				<p th:each = "error : ${#fields.errors('*')}" th:text = ${error}/>
-			</div> -->
+			<!-- Display All Field Errors for RegisterUser -->
+			<div th:if="${#fields.hasErrors('*')}" class="errors">
+				<p>Please Correct Errors Below</p>
+			</div>
 
 			<!-- Call the Appropriate Getter Methods when Form is loaded -->
 			<!-- Call the Appropriate Setter Methods when Form is submitted -->
