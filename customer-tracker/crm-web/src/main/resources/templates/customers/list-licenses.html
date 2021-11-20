@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <title>Licenses</title>
@@ -42,7 +42,8 @@
             <td th:text="${license.startDate}"/>
             <td th:text="${license.expirationDate}"/>
 
-            <!-- Link to Delete an existing License, when cicked a popup appears warning you whether or not to proceed with this action -->
+            <!-- Link to Delete an existing License, when clicked a popup appears warning you
+                whether to proceed with this action -->
             <td>
                 <a th:href="@{/licenses/deleteLicense(licenseId=${license.id})}"
                    class="btn btn-danger btn-sm"

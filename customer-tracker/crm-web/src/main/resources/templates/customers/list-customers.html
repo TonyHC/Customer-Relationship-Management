@@ -128,8 +128,8 @@
     </a>
 
     <!-- Link to view all Licenses -->
-    <a href="#" th:href="@{/licenses/list}"
-       class="btn btn-info btn-sm mb-3">
+    <a href="#" th:href="@{/licenses/list}" class="btn btn-info btn-sm mb-3"
+       sec:authorize="hasAnyRole('ADMIN','MANAGER')">
         Licenses
     </a>
 
