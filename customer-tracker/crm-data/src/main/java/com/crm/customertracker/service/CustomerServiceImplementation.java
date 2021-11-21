@@ -55,7 +55,7 @@ public class CustomerServiceImplementation implements CustomerService {
 	}
 
 	@Override
-	public void deleteCustomer(int customerId) {
+	public void deleteCustomerById(int customerId) {
 		// Delete the Customer by its ID
 		customerRepository.deleteById(customerId);
 	}
@@ -72,7 +72,7 @@ public class CustomerServiceImplementation implements CustomerService {
 			customer = result.get();
 		} else {
 			// Else create a new Customer object
-			customer = new Customer();
+			customer = Customer.builder().build();
 		}
 		
 		return customer;
@@ -103,8 +103,8 @@ public class CustomerServiceImplementation implements CustomerService {
 		
 		// Create a Pageable object to perform PageRequest with sorted parameters applied
 		Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
-		
-		// Return all Customers and Licneses from Pageable object
+
+		// Return all Customers and Licenses from Pageable object
 		return customerRepository.findAll(pageable);
 	}
 
@@ -115,7 +115,7 @@ public class CustomerServiceImplementation implements CustomerService {
 	}
 
 	@Override
-	public void deleteLicense(int licenseId) {
+	public void deleteLicenseById(int licenseId) {
 		// Delete License by its ID (Primary Key)
 		licenseRepository.deleteById(licenseId);
 	}

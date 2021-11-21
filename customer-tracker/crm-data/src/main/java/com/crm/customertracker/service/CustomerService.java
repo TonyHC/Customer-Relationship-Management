@@ -11,11 +11,11 @@ public interface CustomerService {
 	List<Customer> findAllCustomers();
 	Customer findCustomerById(int customerId);
 	void saveCustomer(Customer customer);
-	void deleteCustomer(int customerId);
+	void deleteCustomerById(int customerId);
 	Customer findCustomerLicenses(int customerId);
 	List<Customer> findCustomersByName(String customerName);
 	Page<Customer> findPaginated(int pageNumber, int pageSize, String sortField, String sortDirection);
 	
 	List<License> findAllLicenses();
-	void deleteLicense(int licenseId);
+	void deleteLicenseById(int licenseId);
 }

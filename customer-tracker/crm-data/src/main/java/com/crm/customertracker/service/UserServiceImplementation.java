@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 import com.crm.customertracker.entity.security.Role;
 import com.crm.customertracker.entity.security.User;
-import com.crm.customertracker.model.RegisterUser;
+import com.crm.customertracker.entity.security.RegisterUser;
 import com.crm.customertracker.repository.security.RoleRepository;
 import com.crm.customertracker.repository.security.UserRepository;
 
@@ -62,7 +62,7 @@ public class UserServiceImplementation implements UserService {
 	@Override
 	public void saveUser(RegisterUser registerUser, List<String> roles) {
 		// Create a new User
-		User user = new User();
+		User user = User.builder().build();
 
 		// Set all the User's Properties, after all Form Input Data passed the Constraint Validators
 		user.setUsername(registerUser.getUserName());
