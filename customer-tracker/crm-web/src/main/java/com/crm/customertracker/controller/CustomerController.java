@@ -43,7 +43,7 @@ public class CustomerController {
 	@GetMapping("/showFormForAddingCustomer")
 	public String showFormForAddingCustomer(Model model) {
 		// Create an empty Customer object
-		Customer customer = new Customer();
+		Customer customer = Customer.builder().build();
 
 		// Add empty Customer object to Model Attribute
 		model.addAttribute("customer", customer);
@@ -79,7 +79,7 @@ public class CustomerController {
 	@GetMapping("/deleteCustomer")
 	public String deleteCustomer(@RequestParam("customerId") int customerId) {
 		// Delete an existing Customer by its ID using Customer Service
-		customerService.deleteCustomer(customerId);
+		customerService.deleteCustomerById(customerId);
 
 		return "redirect:/customers/list";
 	}

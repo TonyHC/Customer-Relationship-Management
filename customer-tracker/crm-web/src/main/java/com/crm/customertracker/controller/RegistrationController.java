@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.crm.customertracker.model.RegisterUser;
+import com.crm.customertracker.entity.security.RegisterUser;
 import com.crm.customertracker.service.UserService;
 
 @Controller
@@ -48,17 +48,17 @@ public class RegistrationController {
 	@ModelAttribute("registerUser")
 	public RegisterUser getNewRegisterUser() {
 		// Add an empty RegisterUser object to Model Attribute for Form Validation
-		return new RegisterUser();
+		return RegisterUser.builder().build();
 	}
 
 	@ModelAttribute("roles")
 	public Map<String, String> getSecurityRoles() {
-		// Add all the Security Roles to Model Attribute for the Drop Down List
+		// Add all the Security Roles to Model Attribute for the Drop-Down List
 		return roles;
 	}
 	
 	@GetMapping("/showRegistrationForm")
-	public String showRegistrationForm(Model model) {
+	public String showRegistrationForm() {
 		return "security/registration-form";
 	}
 	

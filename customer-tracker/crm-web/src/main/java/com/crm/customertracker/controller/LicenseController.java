@@ -43,7 +43,7 @@ public class LicenseController {
 	@GetMapping("/deleteLicense")
 	public String deleteLicense(@RequestParam("licenseId") int licenseId) {
 		// Delete an existing License by its ID using Customer Service
-		customerService.deleteLicense(licenseId);
+		customerService.deleteLicenseById(licenseId);
 
 		return "redirect:/licenses/list";
 	}

@@ -29,7 +29,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/page")
-    public String getEmployeeHomePage(Model model) {
+    public String getEmployeeHomePage() {
         return "employees/employee-homepage";
     }
 
@@ -46,7 +46,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/logout")
-    public String getLogoutNavBar(Model model) {
+    public String getLogoutNavBar() {
         return "fragments/nav-logout";
     }
 }
