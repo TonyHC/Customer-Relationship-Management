@@ -1,11 +1,17 @@
-package com.crm.customertracker.model;
+package com.crm.customertracker.entity.security;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.crm.customertracker.validator.FieldMatch;
 import com.crm.customertracker.validator.ValidEmail;
+import lombok.*;
 
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @FieldMatch.List ({@FieldMatch(first = "password", second = "matchingPassword", message = "The password field must match")})
 public class RegisterUser {
 	@NotNull(message="Username is required")
@@ -34,64 +40,4 @@ public class RegisterUser {
 	private String email;
 	
 	private String formRole;
-	
-	public RegisterUser() {
-		
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getMatchingPassword() {
-		return matchingPassword;
-	}
-
-	public void setMatchingPassword(String matchingPassword) {
-		this.matchingPassword = matchingPassword;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getFormRole() {
-		return formRole;
-	}
-
-	public void setFormRole(String formRole) {
-		this.formRole = formRole;
-	}
 }

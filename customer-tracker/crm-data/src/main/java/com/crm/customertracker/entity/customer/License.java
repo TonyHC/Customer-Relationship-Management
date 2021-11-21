@@ -1,5 +1,7 @@
 package com.crm.customertracker.entity.customer;
 
+import lombok.*;
+
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -13,6 +15,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "license")
 public class License {
@@ -33,56 +40,6 @@ public class License {
 	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
-	
-	public License() {
-		
-	}
-	
-	public License(String licenseName, Date startDate, Date expirationDate) {
-		this.licenseName = licenseName;
-		this.startDate = startDate;
-		this.expirationDate = expirationDate;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getLicenseName() {
-		return licenseName;
-	}
-
-	public void setLicenseName(String licenseName) {
-		this.licenseName = licenseName;
-	}
-
-	public Date getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
-
-	public Date getExpirationDate() {
-		return expirationDate;
-	}
-
-	public void setExpirationDate(Date expirationDate) {
-		this.expirationDate = expirationDate;
-	}
-	
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
 
 	@Override
 	public String toString() {

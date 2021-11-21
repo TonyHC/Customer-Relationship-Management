@@ -1,9 +1,16 @@
 package com.crm.customertracker.entity.security;
 
-import java.util.Collection;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.Arrays;
+import java.util.Collection;
 
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "user")
 public class User {
@@ -37,93 +44,16 @@ public class User {
 			joinColumns = @JoinColumn(name = "user_id"),
 			inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Collection<Role> roles;
-	
-	public User() {
-		
-	}
-
-	public User(String username, String password, String firstName, String lastName, String email) {
-		this.username = username;
-		this.password = password;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public Byte[] getImage() {
-		return image;
-	}
-
-	public void setImage(Byte[] image) {
-		this.image = image;
-	}
-
-	public Collection<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Collection<Role> roles) {
-		this.roles = roles;
-	}
 
 	@Override
 	public String toString() {
-		return "User{" +
-				"id=" + id +
-				", username='" + username + '\'' +
-				", password='" + password + '\'' +
-				", firstName='" + firstName + '\'' +
-				", lastName='" + lastName + '\'' +
-				", email='" + email + '\'' +
-				", roles=" + roles +
-				'}';
+		return getClass().getSimpleName() + "(" +
+				"id = " + id + ", " +
+				"username = " + username + ", " +
+				"password = " + password + ", " +
+				"firstName = " + firstName + ", " +
+				"lastName = " + lastName + ", " +
+				"email = " + email + ", " +
+				"image = " + Arrays.toString(image) + ")";
 	}
 }
