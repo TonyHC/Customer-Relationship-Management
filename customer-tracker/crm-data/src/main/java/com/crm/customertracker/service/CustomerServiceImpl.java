@@ -123,7 +123,7 @@ public class CustomerServiceImpl implements CustomerService {
 	public Page<License> findPaginatedLicenses(int pageNumber, int pageSize, String sortField, String sortDirection) {
 		// Create a Sort either ascending or descending based on if Sort Direction in URL is same as sort direction passed in
 		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending()
-					: Sort.by(sortDirection).descending();
+					: Sort.by(sortField).descending();
 
 		// Create a Pageable object to perform PageRequest with sorted parameters applied
 		Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
