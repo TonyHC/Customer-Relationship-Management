@@ -5,11 +5,10 @@ import java.util.List;
 import com.crm.customertracker.entity.security.User;
 import com.crm.customertracker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import com.crm.customertracker.entity.customer.License;
 import com.crm.customertracker.service.CustomerService;
@@ -23,21 +22,18 @@ public class LicenseController {
 	@Autowired
 	private UserService userService;
 
-	@GetMapping("/list")
-	public String listLicenses(Model model) {
-		// Find all Licenses using Customer Service
-		List<License> licenses = customerService.findAllLicenses();
-
-		// Add all Licenses to Model Attribute
-		model.addAttribute("licenses", licenses);
-
+	@ModelAttribute("firstName")
+	public String getAuthenticatedUserFirstName() {
 		// Obtain the authenticated User from User Service
 		User user = userService.retrieveAuthenticatedPrincipalByUsername();
 
 		// Add Authenticated User's First Name to Model Attribute
-		model.addAttribute("firstName", user.getFirstName());
+		return user.getFirstName();
+	}
 
-		return "customers/list-licenses";
+	@GetMapping("/list")
+	public String listLicenses(Model model) {
+		return findPaginatedLicenses(1, "licenseName", "asc", model);
 	}
 
 	@GetMapping("/deleteLicense")
@@ -46,5 +42,33 @@ public class LicenseController {
 		customerService.deleteLicenseById(licenseId);
 
 		return "redirect:/licenses/list";
+	}
+
+	@GetMapping("/page/{pageNumber}")
+	public String findPaginatedLicenses(@PathVariable(value = "pageNumber") int pageNumber,
+										@RequestParam("sortField") String sortField,
+										@RequestParam("sortDirection") String sortDirection,
+										Model model) {
+		// Set the page size for each page of licenses
+		int pageSize = 5;
+
+		// Get all licenses from page using customer service
+		Page<License> licensePage = customerService.findPaginatedLicenses(pageNumber, pageSize, sortField, sortDirection);
+		List<License> licenses = licensePage.getContent();
+
+		// Set Pagination Values to Model Attribute
+		model.addAttribute("currentPage", pageNumber);
+		model.addAttribute("totalPages", licensePage.getTotalPages());
+		model.addAttribute("totalItems", licensePage.getTotalElements());
+
+		// Set Sort Values to Model Attribute
+		model.addAttribute("sortField", sortField);
+		model.addAttribute("sortDirection", sortDirection);
+		model.addAttribute("reverseSortDirection", sortDirection.equals("asc") ? "desc" : "asc");
+
+		// Add all Licenses to Model Attribute
+		model.addAttribute("licenses", licenses);
+
+		return "customers/list-licenses";
 	}
 }

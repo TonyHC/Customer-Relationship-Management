@@ -17,4 +17,5 @@ public interface CustomerService {
 	
 	List<License> findAllLicenses();
 	void deleteLicenseById(int licenseId);
+	Page<License> findPaginatedLicenses(int pageNumber, int pageSize, String sortField, String sortDirection);
 }

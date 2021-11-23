@@ -146,15 +146,15 @@ class CustomerServiceImplTest {
 
     @DisplayName("Display a page containing a list of customers")
     @Test
-    void findPaginated() {
+    void findPaginatedCustomers() {
         Page<Customer> customerPage = Page.empty();
 
         given(customerRepository.findAll(any(Pageable.class))).willReturn(customerPage);
 
-        Page<Customer> returnCustomerPage =
+        Page<Customer> returnCustomersPage =
                 customerServiceImpl.findPaginatedCustomers(1, 5, "firstName", "asc");
 
-        assertThat(returnCustomerPage).isNotNull();
+        assertThat(returnCustomersPage).isNotNull();
     }
 
     @DisplayName("Display a list of licenses")
@@ -173,5 +173,19 @@ class CustomerServiceImplTest {
         customerServiceImpl.deleteLicenseById(anyInt());
 
         then(licenseRepository).should().deleteById(anyInt());
+    }
+
+    @DisplayName("Display a page containing a list of licenses")
+    @Test
+    void findPaginatedLicenses() {
+        Page<License> licensePageable = Page.empty();
+
+        given(licenseRepository.findAll(any(Pageable.class))).willReturn(licensePageable);
+
+        Page<License> returnLicensesPage = customerServiceImpl.findPaginatedLicenses(1, 10,
+                "lastName", "asc");
+
+        assertThat(returnLicensesPage).isNotNull();
+        assertThat(returnLicensesPage.getTotalElements()).isEqualTo(0);
     }
 }

@@ -29,19 +29,69 @@
             <!-- Table to display License Info -->
             <table class="table table-bordered table-striped table-hover">
                 <thead class="thead-dark">
+                    <caption>
+                        <!-- If total number of Pages (Page Size = 5) is greater than one, execute the following -->
+                        <span th:if="${totalPages > 1}">
+
+						    <!-- Total number of Customers in DB -->
+						    Licenses: [[${totalItems}]] &emsp; &emsp;
+
+                            <!-- Display total number of pages: 1 ... x -->
+						    <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+							    <a th:if="${currentPage != i}"
+                                    th:href="@{'/licenses/page/' + ${i} + '?sortField=' + ${sortField} +
+                                    '&sortDirection=' + ${sortDirection}}">[[${i}]]</a>
+							    <span th:unless="${currentPage != i}">[[${i}]]</span>  &emsp;
+						    </span>
+
+                            <!-- If current page number is less than total number of pages,
+                                then display a link to go to next page -->
+                            <!-- Else display the text 'Next' -->
+						    <a th:if="${currentPage < totalPages}"
+                                th:href="@{'/licenses/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} +
+                                '&sortDirection=' + ${sortDirection}}">Next</a>
+						    <span th:unless="${currentPage < totalPages}">Next</span> &nbsp; &nbsp;
+
+                            <!-- If current page number is less than total number of pages,
+                                then display a link to go to the last page -->
+                            <!-- Else display the text 'Last' -->
+						    <a th:if="${currentPage < totalPages}"
+                                th:href="@{'/licenses/page/' + ${totalPages}+ '?sortField=' + ${sortField} +
+                                '&sortDirection=' + ${sortDirection}}">Last</a>
+                            <span th:unless="${currentPage < totalPages}">Last</span>
+                        </span>
+                    </caption>
+
+                    <!-- Add Support for Sorting Table's Columns using Pagination -->
                     <tr>
-                        <th>License</th>
-                        <th>Start Date</th>
-                        <th>Expiration Date</th>
+                        <th>
+                            <a th:href="@{'/licenses/page/' + ${currentPage} + '?sortField=licenseName' +
+                            '&sortDirection=' + ${reverseSortDirection}}">
+                                License
+                            </a>
+                        </th>
+                        <th>
+                            <a th:href="@{'/licenses/page/' + ${currentPage} + '?sortField=startDate' +
+                            '&sortDirection=' + ${reverseSortDirection}}">
+                                Start Date
+                            </a>
+                        </th>
+                        <th>
+                            <a th:href="@{'/licenses/page/' + ${currentPage} + '?sortField=expirationDate' +
+                            '&sortDirection=' + ${reverseSortDirection}}">
+                                Expiration Date
+                            </a>
+                        </th>
+
                         <th>Action</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <tr th:each="license : ${licenses}">
-                        <td th:text="${license.licenseName}"/>
-                        <td th:text="${license.startDate}"/>
-                        <td th:text="${license.expirationDate}"/>
+                        <td th:text="${license.licenseName}"></td>
+                        <td th:text="${license.startDate}"></td>
+                        <td th:text="${license.expirationDate}"></td>
 
                         <!-- Link to Delete an existing License, when clicked a popup appears warning you
                             whether to proceed with this action -->

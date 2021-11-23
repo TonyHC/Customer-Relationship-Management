@@ -1,8 +1,9 @@
 package com.crm.customertracker.service;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.crm.customertracker.entity.customer.Customer;
+import com.crm.customertracker.entity.customer.License;
+import com.crm.customertracker.repository.customer.CustomerRepository;
+import com.crm.customertracker.repository.customer.LicenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,10 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.crm.customertracker.entity.customer.Customer;
-import com.crm.customertracker.entity.customer.License;
-import com.crm.customertracker.repository.customer.CustomerRepository;
-import com.crm.customertracker.repository.customer.LicenseRepository;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -97,14 +96,14 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public Page<Customer> findPaginatedCustomers(int pageNumber, int pageSize, String sortField, String sortDirection) {
-		// Create a Sort based on if Sort Direction in URL is same as method call for ascending order
+		// Create a Sort either ascending or descending based on if Sort Direction in URL is same as sort direction passed in
 		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() 
 					: Sort.by(sortField).descending();
 		
 		// Create a Pageable object to perform PageRequest with sorted parameters applied
 		Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
 
-		// Return all Customers and Licenses from Pageable object
+		// Return a page containing a list of customers
 		return customerRepository.findAll(pageable);
 	}
 
@@ -118,5 +117,18 @@ public class CustomerServiceImpl implements CustomerService {
 	public void deleteLicenseById(int licenseId) {
 		// Delete License by its ID (Primary Key)
 		licenseRepository.deleteById(licenseId);
+	}
+
+	@Override
+	public Page<License> findPaginatedLicenses(int pageNumber, int pageSize, String sortField, String sortDirection) {
+		// Create a Sort either ascending or descending based on if Sort Direction in URL is same as sort direction passed in
+		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending()
+					: Sort.by(sortDirection).descending();
+
+		// Create a Pageable object to perform PageRequest with sorted parameters applied
+		Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
+
+		// Return a page containing a list of licenses
+		return licenseRepository.findAll(pageable);
 	}
 }
