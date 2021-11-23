@@ -16,7 +16,7 @@ import com.crm.customertracker.repository.customer.CustomerRepository;
 import com.crm.customertracker.repository.customer.LicenseRepository;
 
 @Service
-public class CustomerServiceImplementation implements CustomerService {
+public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	private CustomerRepository customerRepository;
 	
@@ -96,7 +96,7 @@ public class CustomerServiceImplementation implements CustomerService {
 	}
 
 	@Override
-	public Page<Customer> findPaginated(int pageNumber, int pageSize, String sortField, String sortDirection) {
+	public Page<Customer> findPaginatedCustomers(int pageNumber, int pageSize, String sortField, String sortDirection) {
 		// Create a Sort based on if Sort Direction in URL is same as method call for ascending order
 		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() 
 					: Sort.by(sortField).descending();

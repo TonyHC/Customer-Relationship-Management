@@ -59,7 +59,7 @@ class EmployeeControllerTest {
     @DisplayName("Employee home page")
     @Test
     void getEmployeeHomePage() throws Exception {
-        mockMvc.perform(get("/employee/page"))
+        mockMvc.perform(get("/employees/page"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("employees/employee-homepage"));
     }
@@ -69,7 +69,7 @@ class EmployeeControllerTest {
     void getEmployeeProfile() throws Exception {
         given(passwordHider.passwordMasking(anyString())).willReturn(PASSWORD);
 
-        mockMvc.perform(get("/employee/profile"))
+        mockMvc.perform(get("/employees/profile"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("employees/employee-profile"))
                 .andExpect(model().attributeExists("user", "maskedPassword", "firstName"));
@@ -78,7 +78,7 @@ class EmployeeControllerTest {
     @DisplayName("Display logout navigation bar")
     @Test
     void getLogoutNavBar() throws Exception {
-        mockMvc.perform(get("/employee/logout"))
+        mockMvc.perform(get("/employees/logout"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("fragments/nav-logout"));
     }

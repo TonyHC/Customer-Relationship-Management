@@ -15,54 +15,56 @@
 
 <body>
 
-<nav th:insert="fragments/nav-logout.html :: nav"></nav>
+    <nav th:insert="fragments/nav-logout.html :: nav"></nav>
 
-<br>
+    <br>
 
-<div class="container col-9">
+    <div class="container col-9">
 
-    <h2 class="nav-padding">Licenses</h2>
+        <h2 class="nav-padding">Licenses</h2>
 
-    <hr>
+        <hr>
 
-    <!-- Table to display License Info -->
-    <table class="table table-bordered table-striped table-hover">
-        <thead class="thead-dark">
-        <tr>
-            <th>License</th>
-            <th>Start Date</th>
-            <th>Expiration Date</th>
-            <th>Action</th>
-        </tr>
-        </thead>
+        <div th:if="${not #lists.isEmpty(licenses)}">
+            <!-- Table to display License Info -->
+            <table class="table table-bordered table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>License</th>
+                        <th>Start Date</th>
+                        <th>Expiration Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
 
-        <tbody>
-        <tr th:each="license : ${licenses}">
-            <td th:text="${license.licenseName}"/>
-            <td th:text="${license.startDate}"/>
-            <td th:text="${license.expirationDate}"/>
+                <tbody>
+                    <tr th:each="license : ${licenses}">
+                        <td th:text="${license.licenseName}"/>
+                        <td th:text="${license.startDate}"/>
+                        <td th:text="${license.expirationDate}"/>
 
-            <!-- Link to Delete an existing License, when clicked a popup appears warning you
-                whether to proceed with this action -->
-            <td>
-                <a th:href="@{/licenses/deleteLicense(licenseId=${license.id})}"
-                   class="btn btn-danger btn-sm"
-                   onclick="if (!(confirm('Are you sure you want to delete this Employee?'))) return false;">
-                    Delete
-                </a>
-            </td>
-        </tr>
-        </tbody>
+                        <!-- Link to Delete an existing License, when clicked a popup appears warning you
+                            whether to proceed with this action -->
+                        <td>
+                            <a th:href="@{/licenses/deleteLicense(licenseId=${license.id})}"
+                                class="btn btn-danger btn-sm"
+                                onclick="if (!(confirm('Are you sure you want to delete this License?'))) return false;">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
 
-    </table>
+            </table>
+        </div>
 
-    <!-- Link to go back to 'customers/list' mapping -->
-    <a href="#" th:href="@{/customers/list}"
-       class="btn btn-primary btn-sm mb-3">
-        Back to Customer List
-    </a>
+        <!-- Link to go back to 'customers/list' mapping -->
+        <a href="#" th:href="@{/customers/list}"
+            class="btn btn-primary btn-sm mb-3">
+            Back to Customer List
+        </a>
 
-</div>
+    </div>
 
 </body>
 

@@ -152,7 +152,7 @@ class CustomerServiceImplTest {
         given(customerRepository.findAll(any(Pageable.class))).willReturn(customerPage);
 
         Page<Customer> returnCustomerPage =
-                customerServiceImpl.findPaginated(1, 5, "firstName", "asc");
+                customerServiceImpl.findPaginatedCustomers(1, 5, "firstName", "asc");
 
         assertThat(returnCustomerPage).isNotNull();
     }

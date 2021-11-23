@@ -1,20 +1,17 @@
 package com.crm.customertracker.config;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
+import com.crm.customertracker.entity.security.User;
+import com.crm.customertracker.service.UserService;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import com.crm.customertracker.entity.security.User;
-import com.crm.customertracker.service.UserService;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 @Component
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
@@ -34,11 +31,11 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		// Find a User by its username
 		User user = userService.findByUserName(username);
 
-		// Place a User found in DB into a HTTP Session
+		// Place a User found in DB into an HTTP Session
 		HttpSession session = request.getSession();
 		session.setAttribute("user", user);
 
 		// Forward that User to employees mapping when authentication (logging in) was successfully
-		response.sendRedirect(request.getContextPath() + "/employee/page");
+		response.sendRedirect(request.getContextPath() + "/employees/page");
 	}
 }

@@ -31,6 +31,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 			.antMatchers("/").permitAll()
+			.antMatchers("/employees/**").hasRole("EMPLOYEE")
 			.antMatchers("/customers/**").hasRole("EMPLOYEE")
 			.antMatchers("/licenses/**").hasAnyRole("MANAGER", "ADMIN")
 			.and()
@@ -52,7 +53,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	}
 	
 	// A simple authentication provider that uses a Data Access Object (DAO) to  retrieve user information from a relational database. 
-	// It leverages a UserDetailsService (as a DAO) in order to lookup the username, password and GrantedAuthority 
+	// It leverages a UserDetailsService (as a DAO) in order to look up the username, password and GrantedAuthority
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider auth = new DaoAuthenticationProvider();

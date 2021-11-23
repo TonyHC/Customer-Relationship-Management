@@ -16,11 +16,11 @@
 
     <!-- Navigation Bar -->
     <nav class="navbar fixed-top navbar-expand-sm" style="background-color: #8080c0;">
-        <a class="navbar-brand nav-heading-brand ms-5" th:href="@{/employee/page}">CRM</a>
+        <a class="navbar-brand nav-heading-brand ms-5" th:href="@{/employees/page}">CRM</a>
 
         <ul class="navbar-nav me-auto mb-auto">
             <li class="nav-item active">
-                <a class="nav-link nav-heading" th:href="@{/employee/page}">Home</a>
+                <a class="nav-link nav-heading" th:href="@{/employees/page}">Home</a>
             </li>
 
             <li class="nav-item">
@@ -36,7 +36,7 @@
         <div class="navbar-nav ms-auto me-4">
 
             <!-- Display First Name of authenticated User -->
-            <a th:text="${firstName}" th:href="@{/employee/profile}" class="me-4 mt-2 user"></a>
+            <a th:text="${firstName}" th:href="@{/employees/profile}" class="me-4 mt-2 user"></a>
 
             <form th:action="@{/logout}" method="POST">
                 <input type="submit" value="Logout" class="btn btn-outline-dark">

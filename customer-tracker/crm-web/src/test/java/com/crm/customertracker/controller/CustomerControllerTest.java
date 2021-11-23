@@ -66,7 +66,7 @@ class CustomerControllerTest {
     @DisplayName("Display a list of customers")
     @Test
     void listCustomers() throws Exception {
-        given(customerService.findPaginated(PAGE_NUMBER, PAGE_SIZE, SORT_FIELD, SORT_DIRECTION))
+        given(customerService.findPaginatedCustomers(PAGE_NUMBER, PAGE_SIZE, SORT_FIELD, SORT_DIRECTION))
                 .willReturn(Page.empty());
 
         mockMvc.perform(get("/customers/list"))
@@ -157,7 +157,7 @@ class CustomerControllerTest {
     @DisplayName("Display page(s) containing a list of customers")
     @Test
     void findPaginated() throws Exception {
-        given(customerService.findPaginated(PAGE_NUMBER, PAGE_SIZE, SORT_FIELD, SORT_DIRECTION))
+        given(customerService.findPaginatedCustomers(PAGE_NUMBER, PAGE_SIZE, SORT_FIELD, SORT_DIRECTION))
                 .willReturn(Page.empty());
 
         mockMvc.perform(get("/customers/page/1")

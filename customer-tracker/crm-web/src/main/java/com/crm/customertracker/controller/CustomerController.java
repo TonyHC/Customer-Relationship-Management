@@ -37,7 +37,7 @@ public class CustomerController {
 	public String listCustomers(Model model) {
 		// Call the findPaginated(): Set the starting page number (zero-based), sort field,
 		// sort direction, and model object
-		return findPaginated(1, "firstName", "asc", model);
+		return findPaginatedCustomers(1, "firstName", "asc", model);
 	}
 
 	@GetMapping("/showFormForAddingCustomer")
@@ -53,7 +53,7 @@ public class CustomerController {
 
 	@PostMapping("/saveCustomer")
 	public String saveCustomer(@Valid @ModelAttribute("customer") Customer customer, BindingResult bindingResult) {
-		// If the 'customer-form' has any Form Errors, then return back to the 'customer-form'
+		// If the 'customer-form' has any Form Errors, then return to the 'customer-form'
 		if (bindingResult.hasErrors()) {
 			return "customers/customer-form";
 		} else {
@@ -113,15 +113,15 @@ public class CustomerController {
 	}
 
 	@GetMapping("/page/{pageNumber}")
-	public String findPaginated(@PathVariable(value = "pageNumber") int pageNumber,
-								@RequestParam("sortField") String sortField,
-								@RequestParam("sortDirection") String sortDirection,
-								Model model) {
+	public String findPaginatedCustomers(@PathVariable(value = "pageNumber") int pageNumber,
+										 @RequestParam("sortField") String sortField,
+										 @RequestParam("sortDirection") String sortDirection,
+										 Model model) {
 		// Set Page Size for each Page
 		int pageSize = 5;
 
 		// Get all Customers from Page using CustomerService
-		Page<Customer> page = customerService.findPaginated(pageNumber, pageSize, sortField, sortDirection);
+		Page<Customer> page = customerService.findPaginatedCustomers(pageNumber, pageSize, sortField, sortDirection);
 		List<Customer> customers = page.getContent();
 
 		// Set Pagination Values to Model Attribute

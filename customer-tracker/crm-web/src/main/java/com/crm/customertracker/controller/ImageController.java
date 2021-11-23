@@ -26,7 +26,7 @@ public class ImageController {
         this.userService = userService;
     }
 
-    @GetMapping("/employee/image")
+    @GetMapping("/employees/image")
     public String showImageUploadForm(Model model) {
         // Obtain the authenticated User from User Service
         User user = userService.retrieveAuthenticatedPrincipalByUsername();
@@ -37,7 +37,7 @@ public class ImageController {
         return "employees/imageUploadForm";
     }
 
-    @PostMapping("/employee/image")
+    @PostMapping("/employees/image")
     public String processImageUploadForm(@RequestParam("imageFile") MultipartFile file) {
         // Retrieved the Authenticated User's Username
         String username = userService.retrieveAuthenticatedPrincipalByUsername().getUsername();
@@ -48,7 +48,7 @@ public class ImageController {
         return "redirect:/employee/profile";
     }
 
-    @GetMapping("/employee/profileImage")
+    @GetMapping("/employees/profileImage")
     public void renderImageFromDB(HttpServletResponse response) throws IOException {
         // Obtain the authenticated User from User Service
         User user = userService.retrieveAuthenticatedPrincipalByUsername();

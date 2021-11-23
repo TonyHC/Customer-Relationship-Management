@@ -50,7 +50,7 @@ class ImageControllerTest {
     @DisplayName("Display image upload form for registered users")
     @Test
     void showImageUploadForm() throws Exception {
-        mockMvc.perform(get("/employee/image"))
+        mockMvc.perform(get("/employees/image"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("employees/imageUploadForm"))
                 .andExpect(model().attributeExists("firstName"));
@@ -62,7 +62,7 @@ class ImageControllerTest {
         MockMultipartFile multipartFile = new MockMultipartFile("imageFile", "testing.txt",
                 "text/plain", "Some text to test".getBytes());
 
-        mockMvc.perform(multipart("/employee/image").file(multipartFile))
+        mockMvc.perform(multipart("/employees/image").file(multipartFile))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(header().string("Location", "/employee/profile"));
 
@@ -82,7 +82,7 @@ class ImageControllerTest {
 
         user.setImage(imageBytes);
 
-        MockHttpServletResponse response = mockMvc.perform(get("/employee/profileImage"))
+        MockHttpServletResponse response = mockMvc.perform(get("/employees/profileImage"))
                 .andExpect(status().isOk())
                 .andReturn().getResponse();
 

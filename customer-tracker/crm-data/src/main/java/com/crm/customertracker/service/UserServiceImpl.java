@@ -22,7 +22,7 @@ import com.crm.customertracker.repository.security.RoleRepository;
 import com.crm.customertracker.repository.security.UserRepository;
 
 @Service
-public class UserServiceImplementation implements UserService {
+public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepository;
 

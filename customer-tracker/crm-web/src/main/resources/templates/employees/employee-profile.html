@@ -27,14 +27,14 @@
             </div>
 
             <div class="col-md-1 mt-2">
-                <a class="btn btn-default me-3" th:href="@{/employee/image}">Image</a>
+                <a class="btn btn-default me-3" th:href="@{/employees/image}">Image</a>
             </div>
         </div>
     </div>
 
     <!-- If User hasn't uploaded a profile picture, use the default picture provided.
          Otherwise, use the uploaded picture provided by the User-->
-    <div th:with="img=${user.getImage() == null} ? '/images/Avatar.jpg' : '/employee/profileImage'">
+    <div th:with="img=${user.getImage() == null} ? '/images/Avatar.jpg' : '/employees/profileImage'">
         <img th:src="${img}" width="100%" height="auto">
     </div>
 
