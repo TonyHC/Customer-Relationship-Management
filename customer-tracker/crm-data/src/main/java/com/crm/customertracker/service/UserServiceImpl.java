@@ -23,12 +23,10 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 	private final UserRepository userRepository;
 	private final RoleRepository roleRepository;
-	private final BCryptPasswordEncoder passwordEncoder;
 
-	public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder) {
+	public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
 		this.userRepository = userRepository;
 		this.roleRepository = roleRepository;
-		this.passwordEncoder = passwordEncoder;
 	}
 
 	// Implement this method from UserDetailsService
@@ -60,6 +58,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void saveUser(RegisterUser registerUser, List<String> roles) {
+		// Create a BCryptPasswordEncoder object to encode a user's password before saving the user into the database
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
 		// Create a new User
 		User user = User.builder().build();
 

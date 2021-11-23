@@ -45,12 +45,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.and()
 			.exceptionHandling().accessDeniedPage("/login/accessDenied");
 	}
-	
-	// Use BCryptPasswordEncoder to encode the password when we register a new User
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
 
 	// A simple authentication provider that uses a Data Access Object (DAO) to  retrieve user information from a relational database.
 	// It leverages a UserDetailsService (as a DAO) in order to look up the username, password and GrantedAuthority
@@ -58,7 +52,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public DaoAuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
 		auth.setUserDetailsService(userService);
-		auth.setPasswordEncoder(passwordEncoder());
+		// Use BCryptPasswordEncoder to encode the password when we register a new User
+		auth.setPasswordEncoder(new BCryptPasswordEncoder());
 		return auth;
 	}
 }

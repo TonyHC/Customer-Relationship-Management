@@ -15,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 
@@ -33,12 +32,10 @@ class UserServiceImplTest {
     public static final String FIRST_NAME = "Ray";
     public static final String LAST_NAME = "Jones";
     public static final String ROLE = "EMPLOYEE";
+    public static final String PASSWORD = "pass123";
 
     @Mock
     UserRepository userRepository;
-
-    @Mock
-    BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @InjectMocks
     UserServiceImpl userService;
@@ -92,10 +89,8 @@ class UserServiceImplTest {
     @Test
     void saveUserFromRegistrationForm() {
         RegisterUser registerUser =
-                RegisterUser.builder().userName(USER_NAME).firstName(FIRST_NAME).lastName(LAST_NAME)
+                RegisterUser.builder().userName(USER_NAME).password(PASSWORD).firstName(FIRST_NAME).lastName(LAST_NAME)
                         .email(EMAIL).formRole(ROLE).build();
-
-        given(bCryptPasswordEncoder.encode(registerUser.getPassword())).willReturn("admin123");
 
         userService.saveUser(registerUser, anyList());
 
