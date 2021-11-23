@@ -1,24 +1,25 @@
 package com.crm.customertracker.aspect;
 
-import java.util.logging.Logger;
-
+import com.crm.customertracker.utils.CustomersMethodCall;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.crm.customertracker.utils.CustomersMethodCall;
+import java.util.logging.Logger;
 
 @Aspect
 @Component
 public class AnalyticsAspect {
 	// Logger for AnalyticsAspect Class
 	private final Logger logger = Logger.getLogger(getClass().getName());
-	
-	@Autowired
-	private CustomersMethodCall customerMethodCalls;
-	
+
+	private final CustomersMethodCall customerMethodCalls;
+
+	public AnalyticsAspect(CustomersMethodCall customerMethodCalls) {
+		this.customerMethodCalls = customerMethodCalls;
+	}
+
 	@Around("com.crm.customertracker.aspect.PointcutDeclarations.NumberOfCallsForSaveCustomer()")
 	public void saveCustomerCalls(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 		// Display Method we are calling

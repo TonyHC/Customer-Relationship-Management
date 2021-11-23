@@ -1,6 +1,6 @@
 package com.crm.customertracker.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.crm.customertracker.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -10,17 +10,17 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.crm.customertracker.service.UserService;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	// Contains the reference that uses the Security Data Source
-	@Autowired
-	private UserService userService;
-	
-	@Autowired
-	private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+	private final UserService userService;
+	private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+
+	public SecurityConfiguration(UserService userService, CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) {
+		this.userService = userService;
+		this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
+	}
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) {
@@ -51,8 +51,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
-	// A simple authentication provider that uses a Data Access Object (DAO) to  retrieve user information from a relational database. 
+
+	// A simple authentication provider that uses a Data Access Object (DAO) to  retrieve user information from a relational database.
 	// It leverages a UserDetailsService (as a DAO) in order to look up the username, password and GrantedAuthority
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {

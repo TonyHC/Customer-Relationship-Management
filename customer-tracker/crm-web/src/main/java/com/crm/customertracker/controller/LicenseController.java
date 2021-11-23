@@ -16,11 +16,13 @@ import com.crm.customertracker.service.CustomerService;
 @Controller
 @RequestMapping("/licenses")
 public class LicenseController {
-	@Autowired
-	private CustomerService customerService;
+	private final CustomerService customerService;
+	private final UserService userService;
 
-	@Autowired
-	private UserService userService;
+	public LicenseController(CustomerService customerService, UserService userService) {
+		this.customerService = customerService;
+		this.userService = userService;
+	}
 
 	@ModelAttribute("firstName")
 	public String getAuthenticatedUserFirstName() {

@@ -3,7 +3,6 @@ package com.crm.customertracker.controller;
 import com.crm.customertracker.entity.security.User;
 import com.crm.customertracker.service.UserService;
 import com.crm.customertracker.utils.PasswordHider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/employees")
 public class EmployeeController {
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+    private final PasswordHider passwordHider;
 
-    @Autowired
-    private PasswordHider passwordHider;
+    public EmployeeController(UserService userService, PasswordHider passwordHider) {
+        this.userService = userService;
+        this.passwordHider = passwordHider;
+    }
 
     @ModelAttribute("firstName")
     public String getAuthenticatedUserFirstName() {

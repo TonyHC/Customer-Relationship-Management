@@ -1,11 +1,10 @@
 package com.crm.customertracker.service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import com.crm.customertracker.entity.security.RegisterUser;
+import com.crm.customertracker.entity.security.Role;
+import com.crm.customertracker.entity.security.User;
+import com.crm.customertracker.repository.security.RoleRepository;
+import com.crm.customertracker.repository.security.UserRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,22 +14,22 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.crm.customertracker.entity.security.Role;
-import com.crm.customertracker.entity.security.User;
-import com.crm.customertracker.entity.security.RegisterUser;
-import com.crm.customertracker.repository.security.RoleRepository;
-import com.crm.customertracker.repository.security.UserRepository;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
-	@Autowired
-	private UserRepository userRepository;
+	private final UserRepository userRepository;
+	private final RoleRepository roleRepository;
+	private final BCryptPasswordEncoder passwordEncoder;
 
-	@Autowired
-	private RoleRepository roleRepository;
-
-	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
+	public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder) {
+		this.userRepository = userRepository;
+		this.roleRepository = roleRepository;
+		this.passwordEncoder = passwordEncoder;
+	}
 
 	// Implement this method from UserDetailsService
 	@Override

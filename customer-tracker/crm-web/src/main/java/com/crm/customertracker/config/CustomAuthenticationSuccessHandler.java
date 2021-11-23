@@ -3,7 +3,6 @@ package com.crm.customertracker.config;
 import com.crm.customertracker.entity.security.User;
 import com.crm.customertracker.service.UserService;
 import org.jboss.logging.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -15,8 +14,11 @@ import java.io.IOException;
 
 @Component
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
-	@Autowired
-	private UserService userService;
+	private final UserService userService;
+
+	public CustomAuthenticationSuccessHandler(UserService userService) {
+		this.userService = userService;
+	}
 
 	private final Logger logger = Logger.getLogger(getClass().getName());
 

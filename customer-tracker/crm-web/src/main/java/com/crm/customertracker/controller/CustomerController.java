@@ -5,7 +5,6 @@ import com.crm.customertracker.entity.customer.License;
 import com.crm.customertracker.entity.security.User;
 import com.crm.customertracker.service.CustomerService;
 import com.crm.customertracker.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,11 +17,13 @@ import java.util.List;
 @Controller
 @RequestMapping("/customers")
 public class CustomerController {
-	@Autowired
-	private CustomerService customerService;
+	private final CustomerService customerService;
+	private final UserService userService;
 
-	@Autowired
-	private UserService userService;
+	public CustomerController(CustomerService customerService, UserService userService) {
+		this.customerService = customerService;
+		this.userService = userService;
+	}
 
 	@ModelAttribute("firstName")
 	public String getAuthenticatedUserFirstName() {

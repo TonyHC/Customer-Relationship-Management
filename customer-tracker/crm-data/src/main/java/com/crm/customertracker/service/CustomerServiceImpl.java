@@ -4,7 +4,6 @@ import com.crm.customertracker.entity.customer.Customer;
 import com.crm.customertracker.entity.customer.License;
 import com.crm.customertracker.repository.customer.CustomerRepository;
 import com.crm.customertracker.repository.customer.LicenseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,12 +15,14 @@ import java.util.Optional;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
-	@Autowired
-	private CustomerRepository customerRepository;
-	
-	@Autowired
-	private LicenseRepository licenseRepository;
-	
+	private final CustomerRepository customerRepository;
+	private final LicenseRepository licenseRepository;
+
+	public CustomerServiceImpl(CustomerRepository customerRepository, LicenseRepository licenseRepository) {
+		this.customerRepository = customerRepository;
+		this.licenseRepository = licenseRepository;
+	}
+
 	@Override
 	public List<Customer> findAllCustomers() {
 		// Return all Customers sorted by last name in ascending order
