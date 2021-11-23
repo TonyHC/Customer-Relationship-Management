@@ -45,12 +45,20 @@
 						    </span>
 
                             <!-- If current page number is less than total number of pages,
-                                then display a link to go to next page -->
+                                   then display a link to go to next page -->
                             <!-- Else display the text 'Next' -->
 						    <a th:if="${currentPage < totalPages}"
                                 th:href="@{'/licenses/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} +
                                 '&sortDirection=' + ${sortDirection}}">Next</a>
 						    <span th:unless="${currentPage < totalPages}">Next</span> &nbsp; &nbsp;
+
+                            <!-- If current page number is not equal to the first page,
+                                    then display a link to go to the previous page from current page-->
+                            <!-- Else display the text 'Prev' -->
+                            <a th:if="${currentPage != 1}"
+                                th:href="@{'/licenses/page/' + ${currentPage - 1}+ '?sortField=' + ${sortField} +
+                                '&sortDirection=' + ${sortDirection}}">Previous</a>
+						    <span th:unless="${currentPage != 1}">Previous</span> &nbsp; &nbsp;
 
                             <!-- If current page number is less than total number of pages,
                                 then display a link to go to the last page -->
@@ -111,7 +119,7 @@
         <!-- Link to go back to 'customers/list' mapping -->
         <a href="#" th:href="@{/customers/list}"
             class="btn btn-primary btn-sm mb-3">
-            Back to Customer List
+            Customer List
         </a>
 
     </div>
