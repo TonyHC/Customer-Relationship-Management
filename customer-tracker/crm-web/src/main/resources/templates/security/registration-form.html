@@ -55,10 +55,10 @@
 			<input type = "password" th:field = "*{matchingPassword}" placeholder = "Password">
 			<p th:if = "${#fields.errors('matchingPassword')}" th:errors = "*{matchingPassword}" class = "error"></p>
 			
-			<input type = "text" th:field = "*{firstName}" placeholder = "First Names">
+			<input type = "text" th:field = "*{firstName}" placeholder = "First Name">
 			<p th:if = "${#fields.errors('firstName')}" th:errors = "*{firstName}" class = "error"></p>
 			
-			<input type = "text" th:field = "*{lastName}" placeholder = "last Name">
+			<input type = "text" th:field = "*{lastName}" placeholder = "Last Name">
 			<p th:if = "${#fields.errors('lastName')}" th:errors = "*{lastName}" class = "error"></p>
 			
 			<input type = "text" th:field = "*{email}" placeholder = "Email">

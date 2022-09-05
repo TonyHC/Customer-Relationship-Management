@@ -45,7 +45,7 @@ public class ImageController {
         // Call the Image Service's saveImage(...) to save the Image uploaded by the User
         imageService.saveImage(username, file);
 
-        return "redirect:/employee/profile";
+        return "redirect:/employees/profile";
     }
 
     @GetMapping("/employees/profileImage")

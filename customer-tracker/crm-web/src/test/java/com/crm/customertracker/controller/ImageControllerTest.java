@@ -64,7 +64,7 @@ class ImageControllerTest {
 
         mockMvc.perform(multipart("/employees/image").file(multipartFile))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(header().string("Location", "/employee/profile"));
+                .andExpect(header().string("Location", "/employees/profile"));
 
         then(imageService).should().saveImage(anyString(), any());
     }

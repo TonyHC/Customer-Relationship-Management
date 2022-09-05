@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.crm.customertracker.entity.security.User;
 import com.crm.customertracker.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
