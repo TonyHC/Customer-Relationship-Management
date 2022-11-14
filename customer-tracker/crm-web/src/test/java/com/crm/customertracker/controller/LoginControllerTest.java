@@ -16,9 +16,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(MockitoExtension.class)
 class LoginControllerTest {
     @InjectMocks
-    LoginController loginController;
+    private LoginController loginController;
 
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {

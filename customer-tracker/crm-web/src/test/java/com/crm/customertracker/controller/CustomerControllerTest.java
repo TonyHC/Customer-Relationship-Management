@@ -36,15 +36,15 @@ class CustomerControllerTest {
     public static final String CUSTOMER_ID = "1";
 
     @Mock
-    CustomerService customerService;
+    private CustomerService customerService;
 
     @Mock
-    UserService userService;
+    private UserService userService;
 
     @InjectMocks
-    CustomerController customerController;
+    private CustomerController customerController;
 
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {

@@ -27,16 +27,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(MockitoExtension.class)
 class ImageControllerTest {
     @Mock
-    ImageService imageService;
+    private ImageService imageService;
 
     @Mock
-    UserService userService;
+    private UserService userService;
 
     @InjectMocks
-    ImageController imageController;
+    private ImageController imageController;
 
-    MockMvc mockMvc;
-    User user;
+    private MockMvc mockMvc;
+    private User user;
 
     @BeforeEach
     void setUp() {

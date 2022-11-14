@@ -36,16 +36,16 @@ class CustomerServiceImplTest {
     public static final String EMAIL = "TJH@gmail.com";
 
     @Mock
-    CustomerRepository customerRepository;
+    private CustomerRepository customerRepository;
 
     @Mock
-    LicenseRepository licenseRepository;
+    private LicenseRepository licenseRepository;
 
     @InjectMocks
-    CustomerServiceImpl customerServiceImpl;
+    private CustomerServiceImpl customerServiceImpl;
 
-    Customer customer;
-    License license;
+    private Customer customer;
+    private License license;
 
     @BeforeEach
     void setUp() {

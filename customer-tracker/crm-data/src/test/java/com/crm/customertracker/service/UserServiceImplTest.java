@@ -35,17 +35,13 @@ class UserServiceImplTest {
     public static final String PASSWORD = "pass123";
 
     @Mock
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @InjectMocks
-    UserServiceImpl userService;
+    private UserServiceImpl userService;
 
     @Captor
-    ArgumentCaptor<User> userArgumentCaptor;
-
-    @BeforeEach
-    void setUp() {
-    }
+    private ArgumentCaptor<User> userArgumentCaptor;
 
     @DisplayName("Load all users from database successfully")
     @Test

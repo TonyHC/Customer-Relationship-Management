@@ -27,16 +27,16 @@ class EmployeeControllerTest {
     public static final String PASSWORD = "test";
 
     @Mock
-    UserService userService;
+    private UserService userService;
 
     @Mock
-    PasswordHider passwordHider;
+    private PasswordHider passwordHider;
 
     @InjectMocks
-    EmployeeController employeeController;
+    private EmployeeController employeeController;
 
-    MockMvc mockMvc;
-    User user;
+    private MockMvc mockMvc;
+    private User user;
 
     @BeforeEach
     void setUp() {

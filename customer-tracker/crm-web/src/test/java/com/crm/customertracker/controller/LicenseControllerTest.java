@@ -27,15 +27,15 @@ class LicenseControllerTest {
     public static final String SORT_FIELD = "licenseName";
     public static final String SORT_DIRECTION = "asc";
     @Mock
-    CustomerService customerService;
+    private CustomerService customerService;
 
     @Mock
-    UserService userService;
+    private UserService userService;
 
     @InjectMocks
-    LicenseController licenseController;
+    private LicenseController licenseController;
 
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {

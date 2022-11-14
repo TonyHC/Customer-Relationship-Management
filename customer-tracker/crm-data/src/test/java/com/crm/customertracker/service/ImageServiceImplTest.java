@@ -24,15 +24,15 @@ class ImageServiceImplTest {
     public static final String USERNAME = "TJ3";
 
     @Mock
-    UserService userService;
+    private UserService userService;
 
     @InjectMocks
-    ImageServiceImpl imageService;
+    private ImageServiceImpl imageService;
 
     @Captor
-    ArgumentCaptor<User> userArgumentCaptor;
+    private ArgumentCaptor<User> userArgumentCaptor;
 
-    User user;
+    private User user;
 
     @BeforeEach
     void setUp() {

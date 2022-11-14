@@ -32,12 +32,12 @@ class RegistrationControllerTest {
     public static final String EMAIL = "MP@gmail.com";
 
     @Mock
-    UserService userService;
+    private UserService userService;
 
     @InjectMocks
-    RegistrationController registrationController;
+    private RegistrationController registrationController;
 
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
