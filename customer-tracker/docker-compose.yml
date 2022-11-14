@@ -1,33 +1,58 @@
+version: '3.9'
+
+x-mysql-command:
+  &mysql-command
+    --character-set-server=utf8mb4 --collation-server=utf8mb4_0900_ai_ci
+
+x-mysql-env:
+  &mysql-env
+    MYSQL_ROOT_PASSWORD: password
+
+x-restart-policy:
+  &restart-policy
+    always
+
 services:
-  mysql:
-    build: ./docker/database
-    container_name: mysql-crm
-    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_0900_ai_ci
-    environment:
-      MYSQL_ROOT_PASSWORD: password
+  mysql-customer-tracker:
+    build: ./docker/database/customer-tracker
+    container_name: mysql-customer-tracker
+    command: *mysql-command
+    environment: *mysql-env
     volumes:
-      - mysql:/var/lib/mysql
+      - mysql-customer-tracker:/var/lib/mysql
     ports:
       - "3308:3306"
     expose:
       - 3308
     networks:
       - mysql
-    restart: always
+    restart: *restart-policy
+  mysql-custom-user:
+    build: ./docker/database/custom-user
+    container_name: mysql-custom-user
+    command: *mysql-command
+    environment: *mysql-env
+    volumes:
+      - mysql-custom-user:/var/lib/mysql
+    ports:
+      - "3309:3306"
+    expose:
+      - 3309
+    networks:
+      - mysql
+    restart: *restart-policy
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:5.2.0
     container_name: phpmyadmin-mysql-crm
     environment:
-      PMA_HOST: mysql
+      PMA_HOSTS: mysql-customer-tracker, mysql-custom-user
       PMA_PORT: 3306
       PMA_ARBITRARY: 1
     ports:
       - "8081:80"
     networks:
       - mysql
-    depends_on:
-      - mysql
-    restart: always
+    restart: *restart-policy
   crm-web:
     image: tchao98/crm-web:latest
     container_name: crm-web
@@ -38,12 +63,14 @@ services:
     networks:
       - mysql
     depends_on:
-      - mysql
-    restart: always
+      - mysql-customer-tracker
+      - mysql-custom-user
+    restart: *restart-policy
 
 networks:
   mysql:
     driver: bridge
 
 volumes:
-  mysql:
+  mysql-customer-tracker:
+  mysql-custom-user:
