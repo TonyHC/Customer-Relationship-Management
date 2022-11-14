@@ -1,32 +1,32 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysql-deployment
+  name: mysql-customer-tracker-deployment
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        component: mysql
+        component: mysql-customer-tracker-deployment
     spec:
       volumes:
-        - name: mysql-initdb
+        - name: mysql-customer-tracker-initdb
           configMap:
-            name: mysql-initdb-configmap
+            name: mysql-customer-tracker-initdb-configmap
       containers:
-        - name: mysql
+        - name: mysql-customer-tracker
           image: mysql/mysql-server:8.0.30
           env:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   key: MYSQL_ROOT_PASSWORD
-                  name: mysql-secret
+                  name: mysql-customer-tracker-secret
           ports:
             - containerPort: 3306
           volumeMounts:
             - mountPath: /docker-entrypoint-initdb.d
-              name: mysql-initdb
+              name: mysql-customer-tracker-initdb
   selector:
     matchLabels:
-      component: mysql
+      component: mysql-customer-tracker-deployment

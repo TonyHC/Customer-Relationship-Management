@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-custom-user-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        component: mysql-custom-user-deployment
+    spec:
+      volumes:
+        - name: mysql-custom-user-initdb
+          configMap:
+            name: mysql-custom-user-initdb-configmap
+      containers:
+        - name: mysql-custom-user
+          image: mysql/mysql-server:8.0.30
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: MYSQL_ROOT_PASSWORD
+                  name: mysql-custom-user-secret
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - mountPath: /docker-entrypoint-initdb.d
+              name: mysql-custom-user-initdb
+  selector:
+    matchLabels:
+      component: mysql-custom-user-deployment
